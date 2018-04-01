@@ -8,24 +8,30 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-struct point
+struct Point
 {
 	int _x; //cord x
 	int _y; //cord y
 	int _d; //moving direction flag of the point
 };
 
-class unit
+class Unit
 {
-	point *cord;
-	point *tpa;
-	int len;
-	int num_tpa;
+	Point **cord;// coordinates of body parts  
+	Point **tpa; // coordinates of turning body points
+	int len;// leight of body
+	int num_tpa; // number of turning poins  
+
+
+private:
+	Unit();
+	Unit(Unit&);
+
 
 public:
-	unit();
-	~unit();
-}
+	Unit(int UnitLen);
+	~Unit();
+};
 
 
 
