@@ -16,7 +16,7 @@ PointArr::PointArr(int Len)
 	arrLen=Len;
 	pArr=new Point [arrLen];
 	if (pArr){
-		for(int i=0;i<Len;i++){
+		for(int i=0;i<arrLen;i++){
 			pArr[i]._x=0;
 			pArr[i]._y=0;
 			pArr[i]._d=0;
@@ -24,7 +24,7 @@ PointArr::PointArr(int Len)
 	}
 }
 
-PointArr::PointArr(PointArr &pa)
+PointArr::PointArr(const PointArr &pa)
 {
 	Point tVar;
 	arrLen=pa.arrLen;
@@ -39,11 +39,53 @@ PointArr::PointArr(PointArr &pa)
 	}
 }
 
+PointArr & PointArr::operator= (const PointArr & paSRC)
+{
+	Point *tVar1,*tVar2;
+	Point tVar3;
+	if (this==&paSRC)
+		return *this;
+	else{
+		tVar1=new Point[paSRC.getLen()];
+		if (tVar1){
+			for(int i=0; i<paSRC.getLen();i++){
+			tVar3=paSRC.getElement(i);
+			tVar1[i]._x=tVar3._x;
+			tVar1[i]._y=tVar3._y;
+			tVar1[i]._d=tVar3._d;
+			}
+		}
+
+		tVar2=tVar1;
+		tVar1=this->pArr;
+		this->pArr=tVar2;
+		this->arrLen=paSRC.getLen();
+
+		delete tVar1;
+		return *this;
+	}
+}
+
 
 PointArr::~PointArr()
 {
 	if (pArr)
 		delete pArr;
+
+}
+
+
+int PointArr::setElement(const Point & PointSRC, int index) const
+{
+	if ((index>=0)&&(index<arrLen)){
+		pArr[index]._x=PointSRC._x;
+		pArr[index]._y=PointSRC._y;	
+		pArr[index]._d=PointSRC._d;
+		return 1;
+	}
+	else
+		return 0;
+
 
 }
 
@@ -171,18 +213,18 @@ int PointArr::delElementFromBegin()
 
 }
 
-Point PointArr::getElement(int index)
+Point PointArr::getElement(int index) const
 {
 	Point tVar;
 	if ((index>=0)&&(index<arrLen)){
 		tVar._x=pArr[index]._x;
 		tVar._y=pArr[index]._y;
-		tVar._x=pArr[index]._d;
+		tVar._d=pArr[index]._d;
 	}
 	return tVar;
 }
 
-int PointArr::getLen()
+int PointArr::getLen() const
 {
 	return arrLen;
 }
@@ -225,7 +267,7 @@ Unit::~Unit()
 
 void Unit::addNewElementInBackOfUnitBody(Point &source)
 {
-	Point **tVar1,**tVar2;
+	Point **tVar1,*tVar2;
 	len++;
 	tVar1=new Point*;
 	for(int i=0; i<len-1; i++){

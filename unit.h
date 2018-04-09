@@ -27,16 +27,18 @@ private:
 
 public:
 	
+	// PointArr();
 	PointArr(int Len);
-	PointArr(PointArr &);
+	PointArr(const PointArr &);
 	~PointArr();
-	Point & operator=(PointArr &);
+	PointArr & operator=(const PointArr &);
+	int setElement (const Point &, int) const;
 	int addElementInBack(const Point &);
 	int delElementFromBack();
 	int addElementInBegin(const Point &);	
 	int delElementFromBegin();
-	Point getElement(int);
-	int getLen();
+	Point getElement(int index) const;
+	int getLen() const;
 
 
 };
