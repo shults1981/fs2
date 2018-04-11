@@ -76,6 +76,14 @@ for (int i=0;i<pa1.getLen();i++){
 	cout<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<"--"<<endl;
 }
 
+cout<<"+++++++++++ test del element i]    ++++++++++++++++++++++"<<endl;
+pa1.delElement(0);
+for (int i=0;i<pa1.getLen();i++){
+	pa1.getElement(i,bufVar);
+	cout<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<"--"<<endl;
+}
+
+
 //---------------------end of test-------------------------------------- 
 
 
