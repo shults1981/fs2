@@ -37,7 +37,7 @@ public:
 	int delElementFromBack();
 	int addElementInBegin(const Point &);	
 	int delElementFromBegin();
-	Point getElement(int index) const;
+	int getElement(int index,Point &) const;
 	int getLen() const;
 
 
