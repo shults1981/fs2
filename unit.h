@@ -29,18 +29,18 @@ public:
 	
 	// PointArr();
 	PointArr(int Len);
-	PointArr(const PointArr &);
+	PointArr(const PointArr &PointSRC);
 	~PointArr();
-	PointArr & operator=(const PointArr &);
-	int setElement (const Point &, int) const;
-	int addElementInBack(const Point &);
+	PointArr & operator=(const PointArr &PointSRC);
+	int setElement (const Point &, int index) const;
+	int addElementInBack(const Point &PointSRC);
 	int delElementFromBack();
-	int addElementInBegin(const Point &);	
+	int addElementInBegin(const Point &PointSRC);	
 	int delElementFromBegin();
 	int getElement(int index,Point &PointDEST) const;
 	int delElement(int index);
 	int getLen() const;
-	int insertElement(int index_I,int index_J);
+	int insertElementAfterIndex(int index,Point &PointSRC);
 
 };
 
@@ -50,8 +50,8 @@ public:
 
 class Unit
 {
-	Point **cord;// coordinates of body parts  
-	Point **tpa; // coordinates of turning body points
+	PointArr cord;// coordinates of body parts  
+	PointArr  tpa; // coordinates of turning body points
 	int len;// leight of body
 	int num_tpa; // number of turning poins  
 

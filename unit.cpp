@@ -24,14 +24,14 @@ PointArr::PointArr(int Len)
 	}
 }
 
-PointArr::PointArr(const PointArr &pa)
+PointArr::PointArr(const PointArr &PointSRC)
 {
 	Point tVar;
-	arrLen=pa.arrLen;
+	arrLen=PointSRC.arrLen;
 	pArr=new Point[arrLen];
 	if (pArr){
 		for (int i=0;i<arrLen;i++){
-			if(pa.getElement(i,tVar)){
+			if(PointSRC.getElement(i,tVar)){
 				pArr[i]._x=tVar._x;
 				pArr[i]._y=tVar._y;
 				pArr[i]._d=tVar._d;
@@ -40,17 +40,17 @@ PointArr::PointArr(const PointArr &pa)
 	}
 }
 
-PointArr & PointArr::operator= (const PointArr & paSRC)
+PointArr & PointArr::operator= (const PointArr & PointSRC)
 {
 	Point *tVar1,*tVar2;
 	Point tVar3;
-	if (this==&paSRC)
+	if (this==&PointSRC)
 		return *this;
 	else{
-		tVar1=new Point[paSRC.getLen()];
+		tVar1=new Point[PointSRC.getLen()];
 		if (tVar1){
-			for(int i=0; i<paSRC.getLen();i++){
-				if(paSRC.getElement(i,tVar3)){
+			for(int i=0; i<PointSRC.getLen();i++){
+				if(PointSRC.getElement(i,tVar3)){
 					tVar1[i]._x=tVar3._x;
 					tVar1[i]._y=tVar3._y;
 					tVar1[i]._d=tVar3._d;
@@ -61,7 +61,7 @@ PointArr & PointArr::operator= (const PointArr & paSRC)
 		tVar2=tVar1;
 		tVar1=this->pArr;
 		this->pArr=tVar2;
-		this->arrLen=paSRC.getLen();
+		this->arrLen=PointSRC.getLen();
 
 		delete []tVar1;
 		return *this;
@@ -232,7 +232,7 @@ int  PointArr::getElement(int index, Point & pointDEST) const
 int PointArr::delElement(int index)
 {
 	Point *tVar1,*tVar2;
-	if ((index>=0)&&index<arrLen){
+	if ((index>=0)&&(index<arrLen)){
 		tVar1=new Point[arrLen-1];
 			if (tVar1){
 				for(int i=0;i<index;i++){
@@ -264,6 +264,48 @@ int PointArr::getLen() const
 	return arrLen;
 }
 
+int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
+{
+	Point *tVar1,*tVar2;
+
+	if ((index>=0)&&(index<arrLen)){
+		if (index==(arrLen-1))
+			return this->addElementInBack(PointSRC);
+		else {
+			tVar1=new Point [arrLen+1];
+			if (tVar1){
+				for(int i=0;i<=index;i++){
+					tVar1[i]._x=pArr[i]._x;
+					tVar1[i]._y=pArr[i]._y;
+					tVar1[i]._d=pArr[i]._d;
+				}
+				tVar1[index+1]._x=PointSRC._x;
+				tVar1[index+1]._y=PointSRC._y;
+				tVar1[index+1]._d=PointSRC._d;
+				for (int i= index+2;i<arrLen+1;i++){
+					tVar1[i]._x=pArr[i-1]._x;
+					tVar1[i]._y=pArr[i-1]._y;
+					tVar1[i]._d=pArr[i-1]._d;
+				}
+				tVar2=pArr;
+				pArr=tVar1;
+				arrLen++;
+				delete []tVar2;
+
+				return 1;
+			}
+			else 
+				return 0;
+		}		
+	}
+	else 
+		return 0;
+	
+
+
+}
+
+
 
 
 
@@ -272,42 +314,23 @@ int PointArr::getLen() const
 //----------------------methods of class Unit
 
 
-Unit::Unit(int UnitLen)
+Unit::Unit(int UnitLen):len(UnitLen),num_tpa(0),cord(len),tpa(num_tpa)
 {
 
-	len=UnitLen;
-	num_tpa=0;
-	cord= new Point*[len];
-	for (int i=0;i<len;i++)
-		cord[i]=new Point;	
-
-	tpa= NULL;
+//	len=UnitLen;
+//	num_tpa=0;
+//	cord(UnitLen);
+//	tpa(1);
 	
 }
 
 Unit::~Unit()
 {
-
-	for (int i=0;i<len;i++)
-		delete cord[i];
-	delete []cord;
-
-	if (tpa){
-		for (int i=0;i<num_tpa;i++)
-		delete tpa[i];
-	}
-	delete []tpa;
-
 }
 
 void Unit::addNewElementInBackOfUnitBody(Point &source)
 {
-	Point **tVar1,*tVar2;
-	len++;
-	tVar1=new Point*;
-	for(int i=0; i<len-1; i++){
-		tVar1[i]=new Point;
-	}
+
 
 }
 
