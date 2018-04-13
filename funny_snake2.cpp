@@ -101,6 +101,17 @@ for (int i=0;i<pa3.getLen();i++){
 	cout<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<"--"<<endl;
 }
 
+PointArr pa4(0);
+cout<<"+++++++++++++ creaete instance this leight=0  ++++++++++++++++++"<<endl;
+//for (int i=0;i<pa4.getLen();i++){
+	pa4.getElement(0,bufVar);
+	cout<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<"--"<<pa4.getLen()<<endl;
+//}
+
+
+
+
+
 //---------------------end of test-------------------------------------- 
 
 

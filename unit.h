@@ -23,11 +23,11 @@ class PointArr
 	Point *pArr;
 	int arrLen;
 private:
-	PointArr();
+	//PointArr();
 
 public:
 	
-	// PointArr();
+	PointArr();
 	PointArr(int Len);
 	PointArr(const PointArr &PointSRC);
 	~PointArr();

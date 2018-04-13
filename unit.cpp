@@ -11,15 +11,37 @@
 //-------------------------------------
 //-----------------methods of class PointArr 
 
+PointArr::PointArr()
+{
+	arrLen=0;
+	pArr=new Point;
+	if (pArr){
+		pArr->_x=9;
+		pArr->_y=9;
+		pArr->_d=9;
+	}
+}
+
 PointArr::PointArr(int Len)
 {
-	arrLen=Len;
-	pArr=new Point [arrLen];
-	if (pArr){
-		for(int i=0;i<arrLen;i++){
-			pArr[i]._x=0;
-			pArr[i]._y=0;
-			pArr[i]._d=0;
+	if (Len==0){
+		arrLen=0;
+		pArr=new Point;
+		if (pArr){
+			pArr->_x=9;
+			pArr->_y=9;
+			pArr->_d=9;
+		}
+	}
+	else {
+		arrLen=Len;
+		pArr=new Point [arrLen];
+		if (pArr){
+			for(int i=0;i<arrLen;i++){
+				pArr[i]._x=0;
+				pArr[i]._y=0;
+				pArr[i]._d=0;
+			}
 		}
 	}
 }
@@ -218,11 +240,16 @@ int PointArr::delElementFromBegin()
 
 int  PointArr::getElement(int index, Point & pointDEST) const
 {
-	
+	if ((index==0)&&(arrLen==0)){
+			pointDEST._x=pArr->_x;
+			pointDEST._y=pArr->_y;
+			pointDEST._d=pArr->_d;
+			return 1;
+	}
 	if ((index>=0)&&(index<arrLen)){
-		pointDEST._x=pArr[index]._x;
-		pointDEST._y=pArr[index]._y;
-		pointDEST._d=pArr[index]._d;
+			pointDEST._x=pArr[index]._x;
+			pointDEST._y=pArr[index]._y;
+			pointDEST._d=pArr[index]._d;
 		return 1;
 	}
 	else 
@@ -317,10 +344,8 @@ int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
 Unit::Unit(int UnitLen):len(UnitLen),num_tpa(0),cord(len),tpa(num_tpa)
 {
 
-//	len=UnitLen;
-//	num_tpa=0;
-//	cord(UnitLen);
-//	tpa(1);
+//	cord.PointArr(len);
+//	tpa(0);
 	
 }
 
