@@ -4,10 +4,10 @@
 //+++++++++++++++++++++
 //+++++++++++++++++++++
 
-#include <stdlib.h>
+// ---------#include <stdlib.h>
 #include "unit.h"
 #include <stddef.h>
-
+#include <iostream>
 //-------------------------------------
 //-----------------methods of class PointArr 
 
@@ -20,6 +20,7 @@ PointArr::PointArr()
 		pArr->_y=9;
 		pArr->_d=9;
 	}
+std::cout<<".....class PoinArr costructor_1..... "<<std::endl;
 }
 
 PointArr::PointArr(int Len)
@@ -28,9 +29,9 @@ PointArr::PointArr(int Len)
 		arrLen=0;
 		pArr=new Point;
 		if (pArr){
-			pArr->_x=9;
-			pArr->_y=9;
-			pArr->_d=9;
+			pArr->_x=0;
+			pArr->_y=0;
+			pArr->_d=0;
 		}
 	}
 	else {
@@ -44,6 +45,7 @@ PointArr::PointArr(int Len)
 			}
 		}
 	}
+std::cout<<".....class PoinArr costructor_2..... "<<std::endl;
 }
 
 PointArr::PointArr(const PointArr &PointSRC)
@@ -95,7 +97,7 @@ PointArr::~PointArr()
 {
 	if (pArr)
 		delete []pArr;
-
+std::cout<<"............class PointArr destructor.........."<<std::endl;
 }
 
 
@@ -117,7 +119,12 @@ int PointArr::setElement(const Point & PointSRC, int index) const
 int PointArr::addElementInBack(const Point &PointSRC)
 {
 	Point *tVar1,*tVar2;
-	arrLen++;
+
+	if (arrLen)
+		arrLen++;
+	else 
+		arrLen=+2;
+
 	tVar1=new Point[arrLen];
 	if (tVar1){
 		if (pArr!=NULL){
@@ -341,36 +348,73 @@ int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
 //----------------------methods of class Unit
 
 
-Unit::Unit(int UnitLen):len(UnitLen),num_tpa(0),cord(len),tpa(num_tpa)
+Unit::Unit(int UnitLen)//:BodyLen(UnitLen),NumOfTPA(0)
 {
 
-//	cord.PointArr(len);
-//	tpa(0);
+	BodyCords = new PointArr(UnitLen);
+	BodyTPA= new PointArr(0);
 	
+std::cout<<" constructor of class Unit!!!!!"<<std::endl;
+
 }
 
 Unit::~Unit()
 {
+
+	delete BodyCords;
+	delete BodyTPA;
+
+
+std::cout<<" destructor of class Unit"<<std::endl;
 }
 
-void Unit::addNewElementInBackOfUnitBody(Point &source)
+int Unit::addNewElementInUnitBody(const Point &PointSRC)
 {
-
-
+	return BodyCords->addElementInBack(PointSRC);
 }
 
-void Unit::delElementFromBackOfUnitBody()
+int Unit::addNewElementInBodyTPA(const Point &PointSRC)
 {
-
-
+	return BodyTPA->addElementInBack(PointSRC);
 }
 
-void Unit::delElementFromBeginOfUnitBody()
+int Unit::delElementFromBackOfUnitBody()
 {
-
-
+	return BodyCords->delElementFromBack();
 
 }
+
+int Unit::delElementFromBodyTPA()
+{
+	return BodyTPA->delElementFromBegin();
+
+}
+
+int Unit::getBodyLen()
+{
+	return BodyCords->getLen();
+}
+
+int Unit::getBodyTPANum()
+{
+	return BodyTPA->getLen();
+}
+
+int Unit::getBodyCords(int BodyPartIndex, Point &PointDEST)
+{
+	return BodyCords->getElement(BodyPartIndex,PointDEST);
+
+}
+
+int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
+{
+	return BodyTPA->getElement(TPAIndex,PointDEST);
+
+}
+
+
+
+
 
 
 

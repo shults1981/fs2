@@ -16,7 +16,7 @@ struct Point
 };
 
 
-//----------------------------------------------------------
+//------------------Class PointArr----------------------------------------
 
 class PointArr
 {
@@ -44,38 +44,48 @@ public:
 
 };
 
-//-------------------------------------------------
-
-
+//------------------ Class Unit  --------------------------------
 
 class Unit
 {
-	PointArr cord;// coordinates of body parts  
-	PointArr  tpa; // coordinates of turning body points
-	int len;// leight of body
-	int num_tpa; // number of turning poins  
+	PointArr *BodyCords;// coordinates of body parts  i
+	PointArr  *BodyTPA; // coordinates of turning body points
+
+	//int BodyLen;// leight of body
+	//int NumOfTPA; // number of turning poins  
 
 
 private:
 	Unit();
 	Unit(Unit&);
 
-
 public:
 	Unit(int UnitLen);
 	~Unit();
-	void addNewElementInBackOfUnitBody(Point &source);
-	void delElementFromBackOfUnitBody();
-	void delElementFromBeginOfUnitBody();
-	
-	
+	virtual int addNewElementInUnitBody(const Point &PointSRC);
+		int addNewElementInBodyTPA(const Point &PointSRC);
+		int delElementFromBackOfUnitBody();
+		int delElementFromBeginOfUnitBody();
+		int delElementFromBodyTPA();	
+		int getBodyLen();
+		int getBodyTPANum();	
+		int getBodyCords(int BodyPartIndex,Point &PointDEST);
+		int getBodyTPA(int TPAIndex,Point &PointDEST);
 
 };
 
 
+//-----------------Class Snake --------------------------
+
+
+class Snake:public Unit
+{
+
+public:
 
 
 
 
+};
 
 #endif 

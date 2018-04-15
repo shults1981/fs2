@@ -5,7 +5,7 @@
 
 * Programm name                  :  funny_snake.cpp
 
-* Author                         :  Aleks
+* Author                         :  Shults1981
 
 * Data create                    :  01/03/2018
 
@@ -33,7 +33,13 @@ int main (int argc, char** argv)
 	
 cout<<"Funny snake v2"<<endl;
 
+
+#define UNIT_TEST_UNIT
+
+
+#ifdef UNIT_TEST_PointArr
 //------ test for class PoinArr--------------------------------------- 
+cout<<"============================================="<<endl;
 Point bufVar={0,0,0};
 Point p1={1,2,3};
 Point p2={4,5,6};
@@ -109,10 +115,49 @@ cout<<"+++++++++++++ creaete instance this leight=0  ++++++++++++++++++"<<endl;
 //}
 
 
-
-
-
 //---------------------end of test-------------------------------------- 
+#endif
+
+
+#ifdef UNIT_TEST_UNIT
+// --------------------test for class Unit ---------------------------
+cout<<"============================================="<<endl;
+Point bufVar2={0,0,0};
+Point p1={1,1,1};
+Point p2={2,2,2};
+Point p3={3,3,3};
+Point p4={4,4,4};
+
+Unit u1(1);
+Unit *pu1;
+
+pu1=new Unit(2);
+
+
+cout<<u1.getBodyLen()<<endl;
+cout<<u1.getBodyTPANum()<<endl;
+cout<<"_______"<<endl;
+cout<<pu1->getBodyLen()<<endl;
+cout<<pu1->getBodyTPANum()<<endl;
+
+cout<<"+++++++++++++ insert element after index ++++++++++++++++++"<<endl;
+u1.addNewElementInUnitBody(p1);
+u1.addNewElementInBodyTPA(p2);
+for (int i=0;i<u1.getBodyLen();i++){
+	u1.getBodyCords(i,bufVar2);
+	cout<<bufVar2._x<<"--"<<bufVar2._y<<"--"<<bufVar2._d<<"--"<<endl;
+}
+
+for (int i=0;i<u1.getBodyTPANum();i++){
+	u1.getBodyTPA(i,bufVar2);
+	cout<<bufVar2._x<<"--"<<bufVar2._y<<"--"<<bufVar2._d<<"--"<<endl;
+}
+
+delete pu1;
+
+//------------------------- of test -------------------------------
+#endif
+
 
 
 
