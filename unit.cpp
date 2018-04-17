@@ -412,14 +412,50 @@ int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
 
 }
 
+//---------------------------------------------------------------------
+
+
+//-------- methods of class Snake--------------------------------------
+
+Snake::Snake():Unit(1)
+{
+
+}
 
 
 
 
+int Snake::addNewElementInUnitBody(const Point &PointSRC)
+{
+	PointArr *tVar1;
+	Point bufVar;
+
+	tVar1= new PointArr(getBodyLen());
+	if (tVar1)
+		return 0;
+
+	for (int i=0;i<getBodyLen();i++){
+		getBodyCords(i,bufVar);
+		tVar1->setElement(bufVar,i);
+	}
+	
+	switch(1){
+	case 1:	break;
+
+	case 2:	break;
+
+	case 3:	break;
+	
+	case 4:	break;
+	
+	default: break;
+	}	
+
+
+	delete tVar1;
+	return 1;
+}
 
 
 
-
-
-
-
+//-----------------------------------------------------------------------

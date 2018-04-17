@@ -50,7 +50,6 @@ class Unit
 {
 	PointArr *BodyCords;// coordinates of body parts  i
 	PointArr  *BodyTPA; // coordinates of turning body points
-
 	//int BodyLen;// leight of body
 	//int NumOfTPA; // number of turning poins  
 
@@ -82,8 +81,8 @@ class Snake:public Unit
 {
 
 public:
-
-
+	Snake();
+	int addNewElementInUnitBody(const Point &PointSRC);
 
 
 };

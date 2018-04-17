@@ -33,12 +33,14 @@ int main (int argc, char** argv)
 	
 cout<<"Funny snake v2"<<endl;
 
+//#define UNIT_TEST_PointArr
+//#define UNIT_TEST_UNIT
+#define UNIT_TEST_SNAKE
 
-#define UNIT_TEST_UNIT
 
-
+//------ test for class PoinArr---------------------------------------
 #ifdef UNIT_TEST_PointArr
-//------ test for class PoinArr--------------------------------------- 
+ 
 cout<<"============================================="<<endl;
 Point bufVar={0,0,0};
 Point p1={1,2,3};
@@ -115,13 +117,14 @@ cout<<"+++++++++++++ creaete instance this leight=0  ++++++++++++++++++"<<endl;
 //}
 
 
-//---------------------end of test-------------------------------------- 
 #endif
+//---------------------end of test--------------------------------------
 
 
-#ifdef UNIT_TEST_UNIT
 // --------------------test for class Unit ---------------------------
-cout<<"============================================="<<endl;
+#ifdef UNIT_TEST_UNIT
+
+cout<<"=====================test for class Unit====================="<<endl;
 Point bufVar2={0,0,0};
 Point p1={1,1,1};
 Point p2={2,2,2};
@@ -154,12 +157,23 @@ for (int i=0;i<u1.getBodyTPANum();i++){
 }
 
 delete pu1;
-
-//------------------------- of test -------------------------------
+cout<<"=====================end of class Unit test======================"<<endl;
 #endif
+//------------------------- of test -------------------------------
 
 
 
+
+//---------------------test for class Snake ----------------------------------
+#ifdef UNIT_TEST_SNAKE
+cout<<"========================test for class Snake================="<<endl;
+{
+Snake sn1;
+
+}
+cout<<"===========================end of class Snake test============="<<endl;
+#endif
+//-------------------end of test -------------------------------------------------
 
 
 return 0;
