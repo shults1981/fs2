@@ -427,32 +427,73 @@ Snake::Snake():Unit(1)
 
 int Snake::addNewElementInUnitBody(const Point &PointSRC)
 {
-	PointArr *tVar1;
 	Point bufVar;
 
-	tVar1= new PointArr(getBodyLen());
-	if (tVar1)
+	getBodyCords(getBodyLen()-1,bufVar);
+
+	switch(bufVar._d){
+	case 1:	
+		bufVar._x=+1;
+		break;
+	case 2:
+		bufVar._x=-1;
+		break;
+
+	case 3:
+		bufVar._y=+1;
+		break;
+	
+	case 4:	
+		bufVar._y=-1;
+		break;
+	
+	default: break;
+	}
+
+	//(bufVar);
+
+/*	
+	PointArr *tVar1,*tVar2;
+	Point bufVar;
+
+	tVar1= new PointArr(getBodyLen()+1);
+	if (!tVar1)
 		return 0;
 
-	for (int i=0;i<getBodyLen();i++){
+	for (int i=0;i<(getBodyLen()-1);i++){
 		getBodyCords(i,bufVar);
 		tVar1->setElement(bufVar,i);
 	}
-	
-	switch(1){
-	case 1:	break;
 
-	case 2:	break;
+	tVar1->getElement(getBodyLen()-2,bufVar);	
+	switch(bufVar._d){
+	case 1:	
+		bufVar._x=+1;
+		tVar1->setElement(bufVar,getBodyLen()-1);
+		break;
+	case 2:
+		bufVar._x=-1;
+		tVar1->setElement(bufVar,getBodyLen()-1);
+		break;
 
-	case 3:	break;
+	case 3:
+		bufVar._y=+1;
+		tVar1->setElement(bufVar,getBodyLen()-1);
+		break;
 	
-	case 4:	break;
+	case 4:	
+		bufVar._y=-1;
+		tVar1->setElement(bufVar,getBodyLen()-1);
+		break;
 	
 	default: break;
 	}	
-
-
+	
+//	tVar2=tVar1;
+//	tVar1=BodyCords
+//	BodyCords=tVar1;
 	delete tVar1;
+*/	
 	return 1;
 }
 
