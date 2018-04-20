@@ -168,7 +168,9 @@ cout<<"=====================end of class Unit test======================"<<endl;
 #ifdef UNIT_TEST_SNAKE
 cout<<"========================test for class Snake================="<<endl;
 {
-Snake sn1;
+Point p11={5,5,5};
+Unit sn1(1);
+cout<<"--"<<sn1.addNewElementInUnitBody(p11)<<endl;
 
 }
 cout<<"===========================end of class Snake test============="<<endl;

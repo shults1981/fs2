@@ -338,11 +338,6 @@ int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
 
 
 }
-
-
-
-
-
 //---------------------------------------
 
 //----------------------methods of class Unit
@@ -360,11 +355,8 @@ std::cout<<" constructor of class Unit!!!!!"<<std::endl;
 
 Unit::~Unit()
 {
-
 	delete BodyCords;
 	delete BodyTPA;
-
-
 std::cout<<" destructor of class Unit"<<std::endl;
 }
 
@@ -381,13 +373,16 @@ int Unit::addNewElementInBodyTPA(const Point &PointSRC)
 int Unit::delElementFromBackOfUnitBody()
 {
 	return BodyCords->delElementFromBack();
+}
 
+int Unit::delElementFromBeginOfUnitBody()
+{
+	return BodyCords->delElementFromBegin();
 }
 
 int Unit::delElementFromBodyTPA()
 {
 	return BodyTPA->delElementFromBegin();
-
 }
 
 int Unit::getBodyLen()
@@ -409,7 +404,6 @@ int Unit::getBodyCords(int BodyPartIndex, Point &PointDEST)
 int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
 {
 	return BodyTPA->getElement(TPAIndex,PointDEST);
-
 }
 
 //---------------------------------------------------------------------
@@ -417,86 +411,65 @@ int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
 
 //-------- methods of class Snake--------------------------------------
 
-Snake::Snake():Unit(1)
-{
-
-}
-
-
-
+Snake::Snake():Unit(1) { }
 
 int Snake::addNewElementInUnitBody(const Point &PointSRC)
 {
 	Point bufVar;
 
-	getBodyCords(getBodyLen()-1,bufVar);
-
-	switch(bufVar._d){
-	case 1:	
-		bufVar._x=+1;
-		break;
-	case 2:
-		bufVar._x=-1;
-		break;
-
-	case 3:
-		bufVar._y=+1;
-		break;
-	
-	case 4:	
-		bufVar._y=-1;
-		break;
-	
-	default: break;
-	}
-
-	//(bufVar);
-
-/*	
-	PointArr *tVar1,*tVar2;
-	Point bufVar;
-
-	tVar1= new PointArr(getBodyLen()+1);
-	if (!tVar1)
+	if (!getBodyCords(getBodyLen()-1,bufVar))
 		return 0;
-
-	for (int i=0;i<(getBodyLen()-1);i++){
-		getBodyCords(i,bufVar);
-		tVar1->setElement(bufVar,i);
+	else {
+		switch(bufVar._d){
+		case 1:	
+			bufVar._x=+1;
+			break;
+		case 2:
+			bufVar._x=-1;
+			break;
+	
+		case 3:
+			bufVar._y=+1;
+			break;
+		
+		case 4:	
+			bufVar._y=-1;
+			break;
+		
+		default: break;
+		}
+		return BodyCords->addElementInBack(bufVar);
 	}
-
-	tVar1->getElement(getBodyLen()-2,bufVar);	
-	switch(bufVar._d){
-	case 1:	
-		bufVar._x=+1;
-		tVar1->setElement(bufVar,getBodyLen()-1);
-		break;
-	case 2:
-		bufVar._x=-1;
-		tVar1->setElement(bufVar,getBodyLen()-1);
-		break;
-
-	case 3:
-		bufVar._y=+1;
-		tVar1->setElement(bufVar,getBodyLen()-1);
-		break;
-	
-	case 4:	
-		bufVar._y=-1;
-		tVar1->setElement(bufVar,getBodyLen()-1);
-		break;
-	
-	default: break;
-	}	
-	
-//	tVar2=tVar1;
-//	tVar1=BodyCords
-//	BodyCords=tVar1;
-	delete tVar1;
-*/	
-	return 1;
 }
 
+int Snake::delElementFromBeginOfUnitBody()  { return 0;}
 
+//-----------------------------------------------------------------------
+
+
+//-------- methods of class Rabbit---------------------------------
+
+Rabbit::Rabbit():Unit(1) { }
+
+int Rabbit::addNewElementInUnitBody(const Point &PointSRC) { return 0; }
+
+int Rabbit::addNewElementInBodyTPA(const Point &PointSRC) { return 0; }
+
+int Rabbit::delElementFromBackOfUnitBody() { return 0; }
+
+int Rabbit::delElementFromBeginOfUnitBody() {return 0; }
+
+int Rabbit::delElementFromBodyTPA() {	return 0; }
+
+int Rabbit::getBodyLen() { return BodyCords->getLen(); }
+
+int Rabbit::getBodyTPANum() {	return 0; }
+
+int Rabbit::getBodyCords(int BodyPartIndex, Point &PointDEST)
+{
+	return BodyCords->getElement(BodyPartIndex,PointDEST);
+}
+
+int Rabbit::getBodyTPA(int TPAIndex, Point &PointDEST) { return 0; }
 
 //-----------------------------------------------------------------------
