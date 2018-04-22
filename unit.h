@@ -46,10 +46,28 @@ public:
 
 //------------------ Class Unit  --------------------------------
 
-class Unit
+class BaseUnitFace 
+{
+public:
+	virtual int addNewElementInUnitBody(const Point &PointSRC)=0;
+	virtual	int addNewElementInBodyTPA(const Point &PointSRC)=0;
+	virtual int setBodyElement(int BodyIndex, const Point &PointSRC)=0;
+	virtual	int delElementFromBackOfUnitBody()=0;
+	virtual	int delElementFromBeginOfUnitBody()=0;
+	virtual	int delElementFromBodyTPA()=0;	
+	virtual	int getBodyLen()=0;
+	virtual	int getBodyTPANum()=0;	
+	virtual	int getBodyCords(int BodyPartIndex,Point &PointDEST)=0;
+	virtual	int getBodyTPA(int TPAIndex,Point &PointDEST)=0;
+};
+
+
+
+
+class Unit:public BaseUnitFace
 {
 protected:
-	PointArr *BodyCords;// coordinates of body parts  i
+	PointArr *BodyCords;// coordinates of body parts 
 	PointArr  *BodyTPA; // coordinates of turning body points
 
 private:
@@ -59,15 +77,16 @@ private:
 public:
 	Unit(int UnitLen);
 	~Unit();
-	virtual int addNewElementInUnitBody(const Point &PointSRC);
-	virtual	int addNewElementInBodyTPA(const Point &PointSRC);
-	virtual	int delElementFromBackOfUnitBody();
-	virtual	int delElementFromBeginOfUnitBody();
-	virtual	int delElementFromBodyTPA();	
-	virtual	int getBodyLen();
-	virtual	int getBodyTPANum();	
-	virtual	int getBodyCords(int BodyPartIndex,Point &PointDEST);
-	virtual	int getBodyTPA(int TPAIndex,Point &PointDEST);
+	int addNewElementInUnitBody(const Point &PointSRC);
+	int addNewElementInBodyTPA(const Point &PointSRC);
+	int setBodyElement(int BodyIndex, const Point &PointSRC);
+	int delElementFromBackOfUnitBody();
+	int delElementFromBeginOfUnitBody();
+	int delElementFromBodyTPA();	
+	int getBodyLen();
+	int getBodyTPANum();	
+	int getBodyCords(int BodyPartIndex,Point &PointDEST);
+	int getBodyTPA(int TPAIndex,Point &PointDEST);
 
 };
 
@@ -77,21 +96,28 @@ public:
 
 class Snake:public Unit
 {
+private:
+	Snake();
+	Snake(Snake &snake);
 
 public:
-	Snake();
+	Snake(const Point &PointSRC);
 	int addNewElementInUnitBody(const Point &PointSRC);
+	int setBodyElement(int BodyIndex, const Point &PointSRC);
 	int delElementFromBeginOfUnitBody ();
 };
 
 
 class Rabbit:public Unit
 {
-
-public:
+private:
 	Rabbit();
+	Rabbit(Rabbit &rabbit);
+public:
+	Rabbit(const Point &PointSRC);
 	int addNewElementInUnitBody(const Point &PointSRC);
 	int addNewElementInBodyTPA(const Point &PointSRC);
+	int setBodyElement(int BodyIndex, const Point &PointSRC);
 	int delElementFromBackOfUnitBody();
 	int delElementFromBeginOfUnitBody();
 	int delElementFromBodyTPA();	
@@ -99,7 +125,6 @@ public:
 	int getBodyTPANum();	
 	int getBodyCords(int BodyPartIndex,Point &PointDEST);
 	int getBodyTPA(int TPAIndex,Point &PointDEST);
-
 };
 
 

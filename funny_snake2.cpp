@@ -168,9 +168,32 @@ cout<<"=====================end of class Unit test======================"<<endl;
 #ifdef UNIT_TEST_SNAKE
 cout<<"========================test for class Snake================="<<endl;
 {
+BaseUnitFace *bu1;
 Point p11={5,5,5};
-Unit sn1(1);
-cout<<"--"<<sn1.addNewElementInUnitBody(p11)<<endl;
+Point p12={2,2,2};
+Point p13={3,3,3};
+Point bufVar12={9,9,9};
+Unit un1(1);
+Snake sn1(p12);
+Rabbit rb1(p13);
+
+cout<<"..........................................."<<endl;
+
+bu1=&un1;
+cout<<"--"<<bu1->addNewElementInUnitBody(p11)<<endl;
+cout<<"--"<<bu1->getBodyLen()<<endl;
+cout<<"--"<<bu1->getBodyCords(1,bufVar12)<<endl;
+cout<<"--"<<bufVar12._x<<"--"<<bufVar12._y<<"--"<<bufVar12._d<<endl;
+bu1=&sn1;
+cout<<"--"<<bu1->addNewElementInUnitBody(p11)<<endl;
+cout<<"--"<<bu1->getBodyLen()<<endl;
+cout<<"--"<<bu1->getBodyCords(1,bufVar12)<<endl;
+cout<<"--"<<bufVar12._x<<"--"<<bufVar12._y<<"--"<<bufVar12._d<<endl;
+bu1=&rb1;
+cout<<"--"<<bu1->addNewElementInUnitBody(p11)<<endl;
+cout<<"--"<<bu1->getBodyLen()<<endl;
+cout<<"--"<<bu1->getBodyCords(1,bufVar12)<<endl;
+cout<<"--"<<bufVar12._x<<"--"<<bufVar12._y<<"--"<<bufVar12._d<<endl;
 
 }
 cout<<"===========================end of class Snake test============="<<endl;

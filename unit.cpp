@@ -13,6 +13,8 @@
 
 PointArr::PointArr()
 {
+std::cout<<".....class PoinArr costructor_1..... "<<std::endl;
+
 	arrLen=0;
 	pArr=new Point;
 	if (pArr){
@@ -20,11 +22,12 @@ PointArr::PointArr()
 		pArr->_y=9;
 		pArr->_d=9;
 	}
-std::cout<<".....class PoinArr costructor_1..... "<<std::endl;
 }
 
 PointArr::PointArr(int Len)
 {
+std::cout<<".....class PoinArr costructor_2..... "<<std::endl;
+
 	if (Len==0){
 		arrLen=0;
 		pArr=new Point;
@@ -45,7 +48,6 @@ PointArr::PointArr(int Len)
 			}
 		}
 	}
-std::cout<<".....class PoinArr costructor_2..... "<<std::endl;
 }
 
 PointArr::PointArr(const PointArr &PointSRC)
@@ -95,9 +97,10 @@ PointArr & PointArr::operator= (const PointArr & PointSRC)
 
 PointArr::~PointArr()
 {
+std::cout<<"............class PointArr destructor.........."<<std::endl;
+
 	if (pArr)
 		delete []pArr;
-std::cout<<"............class PointArr destructor.........."<<std::endl;
 }
 
 
@@ -111,8 +114,6 @@ int PointArr::setElement(const Point & PointSRC, int index) const
 	}
 	else
 		return 0;
-
-
 }
 
 
@@ -343,21 +344,21 @@ int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
 //----------------------methods of class Unit
 
 
-Unit::Unit(int UnitLen)//:BodyLen(UnitLen),NumOfTPA(0)
+Unit::Unit(int UnitLen)
 {
+std::cout<<" constructor of class Unit!!!!!"<<std::endl;
 
 	BodyCords = new PointArr(UnitLen);
 	BodyTPA= new PointArr(0);
-	
-std::cout<<" constructor of class Unit!!!!!"<<std::endl;
 
 }
 
 Unit::~Unit()
 {
+std::cout<<" destructor of class Unit"<<std::endl;
+
 	delete BodyCords;
 	delete BodyTPA;
-std::cout<<" destructor of class Unit"<<std::endl;
 }
 
 int Unit::addNewElementInUnitBody(const Point &PointSRC)
@@ -368,6 +369,11 @@ int Unit::addNewElementInUnitBody(const Point &PointSRC)
 int Unit::addNewElementInBodyTPA(const Point &PointSRC)
 {
 	return BodyTPA->addElementInBack(PointSRC);
+}
+
+int Unit::setBodyElement(int BodyIndex,const Point &PointSRC)
+{
+	return BodyCords->setElement(PointSRC, BodyIndex);
 }
 
 int Unit::delElementFromBackOfUnitBody()
@@ -398,7 +404,6 @@ int Unit::getBodyTPANum()
 int Unit::getBodyCords(int BodyPartIndex, Point &PointDEST)
 {
 	return BodyCords->getElement(BodyPartIndex,PointDEST);
-
 }
 
 int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
@@ -411,7 +416,10 @@ int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
 
 //-------- methods of class Snake--------------------------------------
 
-Snake::Snake():Unit(1) { }
+Snake::Snake(const Point &PointSRC):Unit(1) 
+{
+	BodyCords->setElement(PointSRC,0);
+}
 
 int Snake::addNewElementInUnitBody(const Point &PointSRC)
 {
@@ -441,7 +449,7 @@ int Snake::addNewElementInUnitBody(const Point &PointSRC)
 		return BodyCords->addElementInBack(bufVar);
 	}
 }
-
+int Snake::setBodyElement(int BodyIndex,const Point &PointSRC)  { return 0;}
 int Snake::delElementFromBeginOfUnitBody()  { return 0;}
 
 //-----------------------------------------------------------------------
@@ -449,11 +457,16 @@ int Snake::delElementFromBeginOfUnitBody()  { return 0;}
 
 //-------- methods of class Rabbit---------------------------------
 
-Rabbit::Rabbit():Unit(1) { }
+Rabbit::Rabbit(const Point &PointSRC):Unit(1) 
+{
+	BodyCords->setElement(PointSRC,0);
+}
 
 int Rabbit::addNewElementInUnitBody(const Point &PointSRC) { return 0; }
 
 int Rabbit::addNewElementInBodyTPA(const Point &PointSRC) { return 0; }
+
+int Rabbit::setBodyElement(int BodyIndex,const Point &PointSRC)  { return 0;}
 
 int Rabbit::delElementFromBackOfUnitBody() { return 0; }
 
@@ -471,5 +484,6 @@ int Rabbit::getBodyCords(int BodyPartIndex, Point &PointDEST)
 }
 
 int Rabbit::getBodyTPA(int TPAIndex, Point &PointDEST) { return 0; }
+
 
 //-----------------------------------------------------------------------
