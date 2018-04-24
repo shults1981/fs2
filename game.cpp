@@ -11,7 +11,12 @@
 
 
 
-Game::Game(const Point &PointSN, const Point &PointRB):snake(PointSN),rabbit(PointRB){ GST=game_stop; }
+Game::Game(const Fild game_fild,const Point &SnakePlace, const Point &RabbitPlace):
+				snake(SnakePlace),rabbit(RabbitPlace)
+{
+	GST=game_stop; 
+	GameFild=game_fild;
+}
 
 Game::~Game() {}
 

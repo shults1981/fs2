@@ -24,6 +24,12 @@
 #include "game.h"
 
 
+
+
+
+
+
+
 using namespace std;
 	
 //============================= MAIN ======================================
@@ -204,12 +210,22 @@ cout<<"===========================end of class Snake test============="<<endl;
 //------------------------- test for class game --------------------------------
 #ifdef UNIT_TEST_GAME
 cout<<"================ test for class game=================================="<<endl;
+int row_max=50,col_max=50;
+
+
 Point p31={1,1,1};
 Point p32={2,2,2};
 Point p33={3,3,3};
 Point p34={4,4,4};
+Fild gFild;
+gFild.border_x_min=col_max-9*col_max/10;
+gFild.border_x_max=col_max-2*col_max/10;
+gFild.border_y_min=row_max-9*row_max/10;
+gFild.border_y_max=row_max-2*row_max/10;
 
-Game gameCntr(p31,p32);
+
+
+Game gameCntr(gFild,p31,p32);
 
 
 

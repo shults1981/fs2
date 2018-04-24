@@ -12,18 +12,27 @@
 
 typedef enum _game_status{game_exit=0,game_stop,game_on,game_over} GameStatus;
 
+struct Fild
+{ 
+	int border_x_min;
+	int border_x_max;
+	int border_y_min;
+	int border_y_max;
+};
+
+
 class Game
 {
 private:
 	Snake snake;
 	Rabbit rabbit;
 	GameStatus GST;	
-
+	Fild GameFild;
 
 	Game();
 
 public:
-	Game(const Point &PointSN, const Point &PointRB);
+	Game(const Fild gamefild, const Point &SnakePlace, const Point &RabbitPlace);
 	~Game();	
 	int setGameStatus(GameStatus gst);
 	GameStatus getGameStatus();	
