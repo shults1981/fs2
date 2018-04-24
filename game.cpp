@@ -6,16 +6,24 @@
 
 
 #include "game.h"
+#include <stdlib.h>
+#include <time.h>
 
 
 
 
 
-Game::Game(const Fild game_fild,const Point &SnakePlace, const Point &RabbitPlace):
-				snake(SnakePlace),rabbit(RabbitPlace)
+Game::Game(const Fild game_fild)
+		/*,const Point &SnakePlace, 
+		const Poiint &RabbitPlace)*/
+		:snake(),rabbit()
 {
 	GST=game_stop; 
 	GameFild=game_fild;
+
+		
+
+	srand(time(0));
 }
 
 Game::~Game() {}

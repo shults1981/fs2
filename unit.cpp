@@ -416,9 +416,9 @@ int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
 
 //-------- methods of class Snake--------------------------------------
 
-Snake::Snake(const Point &PointSRC):Unit(1) 
+Snake::Snake(/*const Point &PointSRC*/):Unit(1) 
 {
-	BodyCords->setElement(PointSRC,0);
+	//BodyCords->setElement(PointSRC,0);
 }
 
 int Snake::addNewElementInUnitBody(const Point &PointSRC)
@@ -457,9 +457,9 @@ int Snake::delElementFromBeginOfUnitBody()  { return 0;}
 
 //-------- methods of class Rabbit---------------------------------
 
-Rabbit::Rabbit(const Point &PointSRC):Unit(1) 
+Rabbit::Rabbit(/*const Point &PointSRC*/):Unit(1) 
 {
-	BodyCords->setElement(PointSRC,0);
+	//BodyCords->setElement(PointSRC,0);
 }
 
 int Rabbit::addNewElementInUnitBody(const Point &PointSRC) { return 0; }

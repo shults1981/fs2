@@ -32,7 +32,9 @@ private:
 	Game();
 
 public:
-	Game(const Fild gamefild, const Point &SnakePlace, const Point &RabbitPlace);
+	Game(const Fild gamefild)/*,
+		const Point &SnakePlace,
+		const Point &RabbitPlace)*/;
 	~Game();	
 	int setGameStatus(GameStatus gst);
 	GameStatus getGameStatus();	

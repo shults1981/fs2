@@ -225,7 +225,7 @@ gFild.border_y_max=row_max-2*row_max/10;
 
 
 
-Game gameCntr(gFild,p31,p32);
+Game gameCntr(gFild);
 
 
 

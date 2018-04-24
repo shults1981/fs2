@@ -97,11 +97,11 @@ public:
 class Snake:public Unit
 {
 private:
-	Snake();
+//	Snake();
 	Snake(Snake &snake);
 
 public:
-	Snake(const Point &PointSRC);
+	Snake(/*const Point &PointSRC*/);
 	int addNewElementInUnitBody(const Point &PointSRC);
 	int setBodyElement(int BodyIndex, const Point &PointSRC);
 	int delElementFromBeginOfUnitBody ();
@@ -111,10 +111,10 @@ public:
 class Rabbit:public Unit
 {
 private:
-	Rabbit();
+//	Rabbit();
 	Rabbit(Rabbit &rabbit);
 public:
-	Rabbit(const Point &PointSRC);
+	Rabbit(/*const Point &PointSRC*/);
 	int addNewElementInUnitBody(const Point &PointSRC);
 	int addNewElementInBodyTPA(const Point &PointSRC);
 	int setBodyElement(int BodyIndex, const Point &PointSRC);
