@@ -28,6 +28,19 @@ Game::Game(const Fild game_fild)
 
 Game::~Game() {}
 
+
+int Game::NewGameUnitsSet()
+{
+	if(GST==game_stop){
+//	 Snake.addNewElementInUnitBody();
+		
+		
+	}
+
+	return 1;
+}
+
+
 int Game::setGameStatus(GameStatus gst){ GST=gst; }
 GameStatus Game::getGameStatus(){ return GST; }
 

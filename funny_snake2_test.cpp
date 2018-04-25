@@ -3,7 +3,7 @@
 |*****************************************************************
 * Project                        :  <Funny Snake #2>
 
-* Programm name                  :  funny_snake.cpp
+* Programm name                  :  funny_snake_2.cpp
 
 * Author                         :  Shults1981
 

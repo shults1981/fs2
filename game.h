@@ -10,7 +10,7 @@
 
 #include "unit.h"
 
-typedef enum _game_status{game_exit=0,game_stop,game_on,game_over} GameStatus;
+typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new} GameStatus;
 
 struct Fild
 { 
@@ -36,6 +36,7 @@ public:
 		const Point &SnakePlace,
 		const Point &RabbitPlace)*/;
 	~Game();	
+	int NewGameUnitsSet();
 	int setGameStatus(GameStatus gst);
 	GameStatus getGameStatus();	
 

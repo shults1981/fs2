@@ -421,6 +421,8 @@ Snake::Snake(/*const Point &PointSRC*/):Unit(1)
 	//BodyCords->setElement(PointSRC,0);
 }
 
+Snake::~Snake() { }
+
 int Snake::addNewElementInUnitBody(const Point &PointSRC)
 {
 	Point bufVar;
@@ -428,25 +430,33 @@ int Snake::addNewElementInUnitBody(const Point &PointSRC)
 	if (!getBodyCords(getBodyLen()-1,bufVar))
 		return 0;
 	else {
-		switch(bufVar._d){
-		case 1:	
-			bufVar._x=+1;
-			break;
-		case 2:
-			bufVar._x=-1;
-			break;
-	
-		case 3:
-			bufVar._y=+1;
-			break;
-		
-		case 4:	
-			bufVar._y=-1;
-			break;
-		
-		default: break;
+		if ((!bufVar._x) && (!bufVar._y) && (!bufVar._d)){
+			bufVar._x=PointSRC._x;
+			bufVar._y=PointSRC._y;		
+			bufVar._d=PointSRC._d;			
+			return BodyCords->setElement(bufVar,0);
 		}
-		return BodyCords->addElementInBack(bufVar);
+		else {
+			switch(bufVar._d){
+			case 1:	
+				bufVar._x=+1;
+				break;
+			case 2:
+				bufVar._x=-1;
+				break;
+		
+			case 3:
+				bufVar._y=+1;
+				break;
+			
+			case 4:	
+				bufVar._y=-1;
+				break;
+			
+			default: break;
+			}
+			return BodyCords->addElementInBack(bufVar);
+		}
 	}
 }
 int Snake::setBodyElement(int BodyIndex,const Point &PointSRC)  { return 0;}
@@ -461,6 +471,8 @@ Rabbit::Rabbit(/*const Point &PointSRC*/):Unit(1)
 {
 	//BodyCords->setElement(PointSRC,0);
 }
+
+Rabbit::~Rabbit() { }
 
 int Rabbit::addNewElementInUnitBody(const Point &PointSRC) { return 0; }
 
