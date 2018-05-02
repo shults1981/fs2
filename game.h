@@ -12,6 +12,8 @@
 
 typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new} GameStatus;
 
+typedef enum _unit_status{unit_is_dead=0,unit_is_alive} UnitStatus;
+
 struct Fild
 { 
 	int border_x_min;
@@ -28,6 +30,7 @@ private:
 	Rabbit rabbit;
 	GameStatus GST;	
 	Fild GameFild;
+	UnitStatus rabbitStatus;
 
 	Game();
 
@@ -36,10 +39,15 @@ public:
 		const Point &SnakePlace,
 		const Point &RabbitPlace)*/;
 	~Game();	
-	int NewGameUnitsSet();
+	int newGameUnitsSet();
 	int setGameStatus(GameStatus gst);
 	GameStatus getGameStatus();	
-
+	int getSnakeLen();
+	int getRabbitLen();
+	void RabbitFactory();
+	int getRabbitPlace(Point &PointDEST);
+	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
+	int SnakeMove( int move_flag);
 };
 
 

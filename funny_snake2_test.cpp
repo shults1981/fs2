@@ -217,6 +217,7 @@ Point p31={1,1,1};
 Point p32={2,2,2};
 Point p33={3,3,3};
 Point p34={4,4,4};
+Point tempPoint={9,9,9};
 Fild gFild;
 gFild.border_x_min=col_max-9*col_max/10;
 gFild.border_x_max=col_max-2*col_max/10;
@@ -226,9 +227,17 @@ gFild.border_y_max=row_max-2*row_max/10;
 
 
 Game gameCntr(gFild);
-
-
-
+gameCntr.setGameStatus(game_new);
+gameCntr.newGameUnitsSet();
+cout<<"GST-"<<gameCntr.getGameStatus()<<endl;
+cout<<"Snake Len-"<<gameCntr.getSnakeLen()<<endl;
+cout<<"Rabbit Len-"<<gameCntr.getRabbitLen()<<endl;
+gameCntr.getRabbitPlace(tempPoint);
+cout<<"rabbit place: x-"<<tempPoint._x<<" y-"<<tempPoint._y<<" d-"<<tempPoint._d<<endl;
+for (int i=0;i<gameCntr.getSnakeLen();i++){
+	if(gameCntr.getSnakeBodyPartsCords(i,tempPoint))
+		cout<<"snake place:"<<i<<" x-"<<tempPoint._x<<" y-"<<tempPoint._y<<" d-"<<tempPoint._d<<endl;
+}
 
 cout <<"================= end of class game test============================="<<endl;
 #endif

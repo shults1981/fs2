@@ -23,11 +23,11 @@ class PointArr
 	Point *pArr;
 	int arrLen;
 private:
-	//PointArr();
+	PointArr();
 
 public:
 	
-	PointArr();
+	//PointArr();
 	PointArr(int Len);
 	PointArr(const PointArr &PointSRC);
 	~PointArr();
@@ -46,7 +46,7 @@ public:
 
 //------------------ Class Unit  --------------------------------
 
-class BaseUnitFace 
+class BaseUnitIFace 
 {
 public:
 	virtual int addNewElementInUnitBody(const Point &PointSRC)=0;
@@ -64,7 +64,7 @@ public:
 
 
 
-class Unit:public BaseUnitFace
+class Unit:public BaseUnitIFace
 {
 protected:
 	PointArr *BodyCords;// coordinates of body parts 

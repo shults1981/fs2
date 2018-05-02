@@ -13,20 +13,20 @@
 
 PointArr::PointArr()
 {
-std::cout<<".....class PoinArr costructor_1..... "<<std::endl;
+//std::cout<<".....class PoinArr costructor_1..... "<<std::endl;
 
 	arrLen=0;
 	pArr=new Point;
 	if (pArr){
-		pArr->_x=9;
-		pArr->_y=9;
-		pArr->_d=9;
+		pArr->_x=0;
+		pArr->_y=0;
+		pArr->_d=0;
 	}
 }
 
 PointArr::PointArr(int Len)
 {
-std::cout<<".....class PoinArr costructor_2..... "<<std::endl;
+//std::cout<<".....class PoinArr costructor_2..... "<<std::endl;
 
 	if (Len==0){
 		arrLen=0;
@@ -97,7 +97,7 @@ PointArr & PointArr::operator= (const PointArr & PointSRC)
 
 PointArr::~PointArr()
 {
-std::cout<<"............class PointArr destructor.........."<<std::endl;
+//std::cout<<"............class PointArr destructor.........."<<std::endl;
 
 	if (pArr)
 		delete []pArr;
@@ -346,7 +346,7 @@ int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
 
 Unit::Unit(int UnitLen)
 {
-std::cout<<" constructor of class Unit!!!!!"<<std::endl;
+//std::cout<<" constructor of class Unit!!!!!"<<std::endl;
 
 	BodyCords = new PointArr(UnitLen);
 	BodyTPA= new PointArr(0);
@@ -355,7 +355,7 @@ std::cout<<" constructor of class Unit!!!!!"<<std::endl;
 
 Unit::~Unit()
 {
-std::cout<<" destructor of class Unit"<<std::endl;
+//std::cout<<" destructor of class Unit"<<std::endl;
 
 	delete BodyCords;
 	delete BodyTPA;
@@ -478,7 +478,10 @@ int Rabbit::addNewElementInUnitBody(const Point &PointSRC) { return 0; }
 
 int Rabbit::addNewElementInBodyTPA(const Point &PointSRC) { return 0; }
 
-int Rabbit::setBodyElement(int BodyIndex,const Point &PointSRC)  { return 0;}
+int Rabbit::setBodyElement(int BodyIndex,const Point &PointSRC) 
+{
+	return BodyCords->setElement(PointSRC,0);
+}
 
 int Rabbit::delElementFromBackOfUnitBody() { return 0; }
 
