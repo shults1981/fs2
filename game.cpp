@@ -90,6 +90,8 @@ int  Game::getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST)
 
 int Game::SnakeMove(int move_flag)
 {
+	int i,j,turn_flag;
+
 	if (GST==game_on){
 		Point tempPoint1,tempPoint2,tempPoint3;
 		snake.getBodyCords(0,tempPoint1);
@@ -107,17 +109,70 @@ int Game::SnakeMove(int move_flag)
 			   (snake.getBodyTPANum()<=snake.getBodyLen()-1))
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
-
-
+		
+		for (i=0;i<snake.getBodyLen();i++){
+			turn_flag=0;
+			snake.getBodyCords(0,tempPoint1);
+			if ((tempPoint1._x>GameFild.border_x_min) &&
+			(tempPoint1._x<GameFild.border_x_max) &&
+			(tempPoint1._y>GameFild.border_y_min) &&
+			(tempPoint1._y>GameFild.border_y_max)){
+				if(snake.getBodyTPANum()){
+					for(j=snake.getBodyTPANum()-1;j>=0;j--){
+						snake.getBodyCords(i,tempPoint2);
+						snake.getBodyTPA(j,tempPoint3);
+						if((tempPoint2._x==tempPoint3._x) &&
+							(tempPoint2._y==tempPoint3._y)){
+							switch(tempPoint3._d)
+							{
+							case 1:
+								tempPoint2._x--;
+								break;
+							case 2:
+								tempPoint2._x++;
+								break;
+							case 3:
+								tempPoint2._y--;
+								break;
+							case 4:
+								tempPoint2._y++;
+								break;
+							default:break;
+							}
+							tempPoint2._d=tempPoint3._d;
+							snake.setBodyElement(i,tempPoint2);
+							if((i==snake.getBodyLen()-1) && (j==0))
+								snake.delElementFromBodyTPA();
+							turn_flag=1;
+						}
+					}		
+				}
+				if (!turn_flag){
+					switch(tempPoint2._d)
+					{
+					case 1:
+						tempPoint2._x--;
+						break;
+					case 2:
+						tempPoint2._x++;
+						break;
+					case 3:
+						tempPoint2._y--;
+						break;
+					case 4:
+						tempPoint2._y++;
+						break;
+					default:break;
+					}
+					snake.setBodyElement(i,tempPoint2);
+				}
+			}
+			else
+				GST=game_over;
+		}
+		
 	}
-
-
-
-
-
 	return 1;
-
-
 }
 
 
