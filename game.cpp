@@ -88,7 +88,7 @@ int  Game::getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST)
 }
 
 
-int Game::SnakeMove(int move_flag)
+int Game::SnakeMove()
 {
 	int i,j,turn_flag;
 
@@ -101,7 +101,7 @@ int Game::SnakeMove(int move_flag)
 			snake.addNewElementInUnitBody(tempPoint2);
 			rabbitStatus==unit_is_dead;	
 		}
-//
+//-------------------------------------------------
 
 		if (tempPoint1._d!=move_flag){
 			tempPoint1._d=move_flag;
@@ -174,5 +174,64 @@ int Game::SnakeMove(int move_flag)
 	}
 	return 1;
 }
+
+int Game::SnakeControl(int ch)
+{
+	int key_left=260,key_right=261,key_up=259,key_down=258;	
+	Point tempPoint1;
+	
+	snake.getBodyCords(0,tempPoint1);	
+
+	switch(ch)
+	{
+	case 260:
+		if (snake.getBodyLen()==1)
+			move_flag=left;
+		else 
+			if((snake.getBodyLen()>1)&&(tempPoint1._d==2))
+				move_flag=left;
+		break;
+
+	case 261:
+		if (snake.getBodyLen()==1)
+			move_flag=right;
+		else
+			if((snake.getBodyLen()>1)&&(tempPoint1._d==1))
+				move_flag=right;	
+		break;
+
+	case 259:
+		if (snake.getBodyLen()==1)
+			move_flag=up;
+		else
+			if((snake.getBodyLen()>1)&&(tempPoint1._d==3))
+				move_flag=up;				
+		break;
+
+	case 258:
+		if (snake.getBodyLen()==1)
+			move_flag=down;	
+		else
+			if((snake.getBodyLen()>1)&&(tempPoint1._d==4))
+				move_flag=down;
+		break;
+	
+	default: break;
+
+
+	}
+	return 1;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 

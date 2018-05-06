@@ -22,7 +22,7 @@
 //-----------------------------
 #include "unit.h"
 #include "game.h"
-
+#include "ncurses.h"
 
 
 
@@ -239,6 +239,7 @@ for (int i=0;i<gameCntr.getSnakeLen();i++){
 		cout<<"snake place:"<<i<<" x-"<<tempPoint._x<<" y-"<<tempPoint._y<<" d-"<<tempPoint._d<<endl;
 }
 
+cout<<KEY_LEFT<<"- "<<KEY_RIGHT<<"-"<<KEY_UP<<"-"<<KEY_DOWN<<endl;
 cout <<"================= end of class game test============================="<<endl;
 #endif
 // -------------------------------------end of test ----------------------------

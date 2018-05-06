@@ -11,8 +11,8 @@
 #include "unit.h"
 
 typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new} GameStatus;
-
 typedef enum _unit_status{unit_is_dead=0,unit_is_alive} UnitStatus;
+typedef enum _move_direction{left=1,right,up,down} MoveDirection;
 
 struct Fild
 { 
@@ -31,6 +31,7 @@ private:
 	GameStatus GST;	
 	Fild GameFild;
 	UnitStatus rabbitStatus;
+	MoveDirection move_flag;
 
 	Game();
 
@@ -47,7 +48,8 @@ public:
 	void RabbitFactory();
 	int getRabbitPlace(Point &PointDEST);
 	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
-	int SnakeMove( int move_flag);
+	int SnakeControl(int ch);
+	int SnakeMove();
 };
 
 
@@ -56,5 +58,4 @@ public:
 
 
 #endif
-
 
