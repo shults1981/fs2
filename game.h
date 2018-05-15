@@ -36,9 +36,7 @@ private:
 	Game();
 
 public:
-	Game(const Fild gamefild)/*,
-		const Point &SnakePlace,
-		const Point &RabbitPlace)*/;
+	Game(const Fild gamefild);
 	~Game();	
 	int newGameUnitsSet();
 	int setGameStatus(GameStatus gst);
@@ -48,8 +46,9 @@ public:
 	void RabbitFactory();
 	int getRabbitPlace(Point &PointDEST);
 	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
-	int SnakeControl(int ch);
+	int SnakeControl(MoveDirection md);
 	int SnakeMove();
+	int GameOver();
 };
 
 

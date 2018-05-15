@@ -59,6 +59,7 @@ public:
 	virtual	int getBodyTPANum()=0;	
 	virtual	int getBodyCords(int BodyPartIndex,Point &PointDEST)=0;
 	virtual	int getBodyTPA(int TPAIndex,Point &PointDEST)=0;
+	virtual int ClearBodyAndTPA()=0;
 };
 
 
@@ -87,6 +88,7 @@ public:
 	int getBodyTPANum();	
 	int getBodyCords(int BodyPartIndex,Point &PointDEST);
 	int getBodyTPA(int TPAIndex,Point &PointDEST);
+	int ClearBodyAndTPA();
 
 };
 

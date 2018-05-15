@@ -411,15 +411,32 @@ int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
 	return BodyTPA->getElement(TPAIndex,PointDEST);
 }
 
+int Unit::ClearBodyAndTPA()
+{
+	Point tempVar;
+	tempVar._x=0;
+	tempVar._y=0;
+	tempVar._d=0;
+	for(int i=1;i<BodyCords->getLen();i++)
+		BodyCords->delElementFromBack();
+	for (int i=1;i<BodyTPA->getLen();i++)
+		BodyTPA->delElementFromBack();
+
+	BodyCords->setElement(tempVar,0);
+	BodyTPA->setElement(tempVar,0);
+
+	return 1;
+			
+}
+
+
+
 //---------------------------------------------------------------------
 
 
 //-------- methods of class Snake--------------------------------------
 
-Snake::Snake(/*const Point &PointSRC*/):Unit(1) 
-{
-	//BodyCords->setElement(PointSRC,0);
-}
+Snake::Snake():Unit(1) { }
 
 Snake::~Snake() { }
 

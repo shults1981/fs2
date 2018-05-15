@@ -240,6 +240,15 @@ for (int i=0;i<gameCntr.getSnakeLen();i++){
 }
 
 cout<<KEY_LEFT<<"- "<<KEY_RIGHT<<"-"<<KEY_UP<<"-"<<KEY_DOWN<<endl;
+
+gameCntr.setGameStatus(game_on);
+gameCntr.SnakeMove();
+gameCntr.SnakeMove();
+for (int i=0;i<gameCntr.getSnakeLen();i++){
+	if(gameCntr.getSnakeBodyPartsCords(i,tempPoint))
+		cout<<"snake place:"<<i<<" x-"<<tempPoint._x<<" y-"<<tempPoint._y<<" d-"<<tempPoint._d<<endl;
+}
+
 cout <<"================= end of class game test============================="<<endl;
 #endif
 // -------------------------------------end of test ----------------------------

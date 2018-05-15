@@ -13,10 +13,7 @@
 
 
 
-Game::Game(const Fild game_fild)
-		/*,const Point &SnakePlace, 
-		const Poiint &RabbitPlace)*/
-		:snake(),rabbit()
+Game::Game(const Fild game_fild):snake(),rabbit()
 {
 	GST=game_stop; 
 	GameFild=game_fild;
@@ -39,6 +36,7 @@ int Game::newGameUnitsSet()
 	
 	rabbitStatus=unit_is_dead;
 	RabbitFactory();
+//
 	return 1;
 	}
 	else
@@ -113,10 +111,8 @@ int Game::SnakeMove()
 		for (i=0;i<snake.getBodyLen();i++){
 			turn_flag=0;
 			snake.getBodyCords(0,tempPoint1);
-			if ((tempPoint1._x>GameFild.border_x_min) &&
-			(tempPoint1._x<GameFild.border_x_max) &&
-			(tempPoint1._y>GameFild.border_y_min) &&
-			(tempPoint1._y>GameFild.border_y_max)){
+			if ((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&
+				(tempPoint1._y>GameFild.border_y_max)){
 				if(snake.getBodyTPANum()){
 					for(j=snake.getBodyTPANum()-1;j>=0;j--){
 						snake.getBodyCords(i,tempPoint2);
@@ -175,16 +171,15 @@ int Game::SnakeMove()
 	return 1;
 }
 
-int Game::SnakeControl(int ch)
+int Game::SnakeControl(MoveDirection md)
 {
-	int key_left=260,key_right=261,key_up=259,key_down=258;	
 	Point tempPoint1;
 	
 	snake.getBodyCords(0,tempPoint1);	
 
-	switch(ch)
+	switch(md)
 	{
-	case 260:
+	case left:
 		if (snake.getBodyLen()==1)
 			move_flag=left;
 		else 
@@ -192,7 +187,7 @@ int Game::SnakeControl(int ch)
 				move_flag=left;
 		break;
 
-	case 261:
+	case right:
 		if (snake.getBodyLen()==1)
 			move_flag=right;
 		else
@@ -200,7 +195,7 @@ int Game::SnakeControl(int ch)
 				move_flag=right;	
 		break;
 
-	case 259:
+	case up:
 		if (snake.getBodyLen()==1)
 			move_flag=up;
 		else
@@ -208,7 +203,7 @@ int Game::SnakeControl(int ch)
 				move_flag=up;				
 		break;
 
-	case 258:
+	case down:
 		if (snake.getBodyLen()==1)
 			move_flag=down;	
 		else
@@ -223,7 +218,16 @@ int Game::SnakeControl(int ch)
 	return 1;
 }
 
+int Game::GameOver()
+{
 
+	if (GST==game_over){
+		snake.ClearBodyAndTPA();
+		rabbit.ClearBodyAndTPA();
+	}
+
+	return 1;
+}
 
 
 
