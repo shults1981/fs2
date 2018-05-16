@@ -103,8 +103,7 @@ int Game::SnakeMove()
 
 		if (tempPoint1._d!=move_flag){
 			tempPoint1._d=move_flag;
-			if((snake.getBodyLen()>1) && 
-			   (snake.getBodyTPANum()<=snake.getBodyLen()-1))
+			if((snake.getBodyLen()>1) &&  (snake.getBodyTPANum()<=snake.getBodyLen()-1))
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
 		
@@ -112,13 +111,12 @@ int Game::SnakeMove()
 			turn_flag=0;
 			snake.getBodyCords(0,tempPoint1);
 			if ((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&
-				(tempPoint1._y>GameFild.border_y_max)){
+				(tempPoint1._y<GameFild.border_y_max)){
+				snake.getBodyCords(i,tempPoint2);
 				if(snake.getBodyTPANum()){
 					for(j=snake.getBodyTPANum()-1;j>=0;j--){
-						snake.getBodyCords(i,tempPoint2);
 						snake.getBodyTPA(j,tempPoint3);
-						if((tempPoint2._x==tempPoint3._x) &&
-							(tempPoint2._y==tempPoint3._y)){
+						if((tempPoint2._x==tempPoint3._x) && (tempPoint2._y==tempPoint3._y)){
 							switch(tempPoint3._d)
 							{
 							case 1:
@@ -147,18 +145,24 @@ int Game::SnakeMove()
 					switch(tempPoint2._d)
 					{
 					case 1:
+					std::cout<<"1111111-----O_o!Im hear!"<<std::endl;
 						tempPoint2._x--;
 						break;
 					case 2:
+					std::cout<<"2222222-----O_o!Im hear!"<<std::endl;
 						tempPoint2._x++;
 						break;
 					case 3:
+					std::cout<<"3333333-----O_o!Im hear!"<<std::endl;
 						tempPoint2._y--;
 						break;
 					case 4:
+					std::cout<<"444444------O_o!Im hear!"<<std::endl;
 						tempPoint2._y++;
 						break;
-					default:break;
+					default:
+					std::cout<<"Def----------!Im hear!"<<std::endl;
+						break;
 					}
 					snake.setBodyElement(i,tempPoint2);
 				}
@@ -179,36 +183,36 @@ int Game::SnakeControl(MoveDirection md)
 
 	switch(md)
 	{
-	case left:
+	case Left:
 		if (snake.getBodyLen()==1)
-			move_flag=left;
+			move_flag=Left;
 		else 
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==2))
-				move_flag=left;
+				move_flag=Left;
 		break;
 
-	case right:
+	case Right:
 		if (snake.getBodyLen()==1)
-			move_flag=right;
+			move_flag=Right;
 		else
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==1))
-				move_flag=right;	
+				move_flag=Right;	
 		break;
 
-	case up:
+	case Up:
 		if (snake.getBodyLen()==1)
-			move_flag=up;
+			move_flag=Up;
 		else
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==3))
-				move_flag=up;				
+				move_flag=Up;				
 		break;
 
-	case down:
+	case Down:
 		if (snake.getBodyLen()==1)
-			move_flag=down;	
+			move_flag=Down;	
 		else
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==4))
-				move_flag=down;
+				move_flag=Down;
 		break;
 	
 	default: break;

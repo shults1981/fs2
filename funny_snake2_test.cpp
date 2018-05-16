@@ -229,25 +229,31 @@ gFild.border_y_max=row_max-2*row_max/10;
 Game gameCntr(gFild);
 gameCntr.setGameStatus(game_new);
 gameCntr.newGameUnitsSet();
+
+//cout<<"keys codes(l,r,u,d): "<<KEY_LEFT<<","<<KEY_RIGHT<<","<<KEY_UP<<","<<KEY_DOWN<<endl;
+
+
 cout<<"GST-"<<gameCntr.getGameStatus()<<endl;
-cout<<"Snake Len-"<<gameCntr.getSnakeLen()<<endl;
 cout<<"Rabbit Len-"<<gameCntr.getRabbitLen()<<endl;
 gameCntr.getRabbitPlace(tempPoint);
 cout<<"rabbit place: x-"<<tempPoint._x<<" y-"<<tempPoint._y<<" d-"<<tempPoint._d<<endl;
+cout<<"Snake Len-"<<gameCntr.getSnakeLen()<<endl;
 for (int i=0;i<gameCntr.getSnakeLen();i++){
 	if(gameCntr.getSnakeBodyPartsCords(i,tempPoint))
 		cout<<"snake place:"<<i<<" x-"<<tempPoint._x<<" y-"<<tempPoint._y<<" d-"<<tempPoint._d<<endl;
 }
-
-cout<<KEY_LEFT<<"- "<<KEY_RIGHT<<"-"<<KEY_UP<<"-"<<KEY_DOWN<<endl;
 
 gameCntr.setGameStatus(game_on);
+cout<<"GST-"<<gameCntr.getGameStatus()<<endl;
+gameCntr.SnakeControl(Up);
 gameCntr.SnakeMove();
-gameCntr.SnakeMove();
+//gameCntr.SnakeMove();
+
 for (int i=0;i<gameCntr.getSnakeLen();i++){
 	if(gameCntr.getSnakeBodyPartsCords(i,tempPoint))
 		cout<<"snake place:"<<i<<" x-"<<tempPoint._x<<" y-"<<tempPoint._y<<" d-"<<tempPoint._d<<endl;
 }
+cout<<"GST-"<<gameCntr.getGameStatus()<<endl;
 
 cout <<"================= end of class game test============================="<<endl;
 #endif
