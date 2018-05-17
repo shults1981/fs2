@@ -476,7 +476,7 @@ int Snake::addNewElementInUnitBody(const Point &PointSRC)
 		}
 	}
 }
-int Snake::setBodyElement(int BodyIndex,const Point &PointSRC)  { return 0;}
+//int Snake::setBodyElement(int BodyIndex,const Point &PointSRC)  { return 0;}
 int Snake::delElementFromBeginOfUnitBody()  { return 0;}
 
 //-----------------------------------------------------------------------

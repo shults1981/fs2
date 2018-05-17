@@ -103,6 +103,7 @@ int Game::SnakeMove()
 
 		if (tempPoint1._d!=move_flag){
 			tempPoint1._d=move_flag;
+			snake.setBodyElement(0,tempPoint1);
 			if((snake.getBodyLen()>1) &&  (snake.getBodyTPANum()<=snake.getBodyLen()-1))
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
@@ -184,16 +185,20 @@ int Game::SnakeControl(MoveDirection md)
 	switch(md)
 	{
 	case Left:
-		if (snake.getBodyLen()==1)
+		if (snake.getBodyLen()==1){
 			move_flag=Left;
+			std::cout<<"turn to the left!"<<std::endl;
+		}
 		else 
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==2))
 				move_flag=Left;
 		break;
 
 	case Right:
-		if (snake.getBodyLen()==1)
+		if (snake.getBodyLen()==1){
 			move_flag=Right;
+			std::cout<<"turn to the right!"<<std::endl;
+		}
 		else
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==1))
 				move_flag=Right;	

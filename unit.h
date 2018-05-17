@@ -105,7 +105,7 @@ public:
 	Snake();
 	~Snake();
 	int addNewElementInUnitBody(const Point &PointSRC);
-	int setBodyElement(int BodyIndex, const Point &PointSRC);
+	//int setBodyElement(int BodyIndex, const Point &PointSRC);
 	int delElementFromBeginOfUnitBody ();
 };
 
