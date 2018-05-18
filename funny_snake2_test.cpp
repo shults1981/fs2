@@ -248,6 +248,12 @@ cout<<"GST-"<<gameCntr.getGameStatus()<<endl;
 gameCntr.SnakeControl(Left);
 gameCntr.SnakeMove();
 gameCntr.SnakeMove();
+gameCntr.SnakeMove();
+gameCntr.SnakeMove();
+gameCntr.SnakeControl(Up);
+gameCntr.SnakeMove();
+gameCntr.SnakeMove();
+
 
 for (int i=0;i<gameCntr.getSnakeLen();i++){
 	if(gameCntr.getSnakeBodyPartsCords(i,tempPoint))

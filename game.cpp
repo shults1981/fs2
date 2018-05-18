@@ -60,8 +60,10 @@ void Game::RabbitFactory()
 {
 	if (!rabbitStatus){
 		Point bufVar;
-		bufVar._x=GameFild.border_x_min+rand()%(GameFild.border_x_max-GameFild.border_x_min-1)+1;
-		bufVar._y=GameFild.border_y_min+rand()%(GameFild.border_y_max-GameFild.border_y_min-1)+1;
+		bufVar._x=16;//--------------------
+		bufVar._y=17;//-------------------
+//		bufVar._x=GameFild.border_x_min+rand()%(GameFild.border_x_max-GameFild.border_x_min-1)+1;
+//		bufVar._y=GameFild.border_y_min+rand()%(GameFild.border_y_max-GameFild.border_y_min-1)+1;
 		bufVar._d=0;
 		rabbit.setBodyElement(0,bufVar);
 		rabbitStatus=unit_is_alive;
@@ -146,23 +148,18 @@ int Game::SnakeMove()
 					switch(tempPoint2._d)
 					{
 					case 1:
-					std::cout<<"1111111-----O_o!Im hear!"<<std::endl;
 						tempPoint2._x--;
 						break;
 					case 2:
-					std::cout<<"2222222-----O_o!Im hear!"<<std::endl;
 						tempPoint2._x++;
 						break;
 					case 3:
-					std::cout<<"3333333-----O_o!Im hear!"<<std::endl;
 						tempPoint2._y--;
 						break;
 					case 4:
-					std::cout<<"444444------O_o!Im hear!"<<std::endl;
 						tempPoint2._y++;
 						break;
 					default:
-					std::cout<<"Def----------!Im hear!"<<std::endl;
 						break;
 					}
 					snake.setBodyElement(i,tempPoint2);
@@ -187,7 +184,6 @@ int Game::SnakeControl(MoveDirection md)
 	case Left:
 		if (snake.getBodyLen()==1){
 			move_flag=Left;
-			std::cout<<"turn to the left!"<<std::endl;
 		}
 		else 
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==2))
@@ -197,7 +193,6 @@ int Game::SnakeControl(MoveDirection md)
 	case Right:
 		if (snake.getBodyLen()==1){
 			move_flag=Right;
-			std::cout<<"turn to the right!"<<std::endl;
 		}
 		else
 			if((snake.getBodyLen()>1)&&(tempPoint1._d==1))

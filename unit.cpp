@@ -456,22 +456,24 @@ int Snake::addNewElementInUnitBody(const Point &PointSRC)
 		else {
 			switch(bufVar._d){
 			case 1:	
-				bufVar._x=+1;
+				//
+				bufVar._x++;
 				break;
 			case 2:
-				bufVar._x=-1;
+				bufVar._x--;
 				break;
 		
 			case 3:
-				bufVar._y=+1;
+				bufVar._y++;
 				break;
 			
 			case 4:	
-				bufVar._y=-1;
+				bufVar._y--;
 				break;
 			
 			default: break;
 			}
+			std::cout<<"adding --"<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<std::endl;//---------------------
 			return BodyCords->addElementInBack(bufVar);
 		}
 	}
