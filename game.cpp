@@ -102,10 +102,11 @@ int Game::SnakeMove()
 			rabbitStatus==unit_is_dead;	
 		}
 //-------------------------------------------------
-
-		if (tempPoint1._d!=move_flag){
+		std::cout<<move_flag<<std::endl;
+		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=move_flag;
 			snake.setBodyElement(0,tempPoint1);
+			std::cout<<"OOO I am hear!"<<std::endl;
 			if((snake.getBodyLen()>1) &&  (snake.getBodyTPANum()<=snake.getBodyLen()-1))
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
@@ -186,7 +187,7 @@ int Game::SnakeControl(MoveDirection md)
 			move_flag=Left;
 		}
 		else 
-			if((snake.getBodyLen()>1)&&(tempPoint1._d==2))
+			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==2)))
 				move_flag=Left;
 		break;
 
@@ -195,7 +196,7 @@ int Game::SnakeControl(MoveDirection md)
 			move_flag=Right;
 		}
 		else
-			if((snake.getBodyLen()>1)&&(tempPoint1._d==1))
+			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==1)))
 				move_flag=Right;	
 		break;
 
@@ -203,7 +204,7 @@ int Game::SnakeControl(MoveDirection md)
 		if (snake.getBodyLen()==1)
 			move_flag=Up;
 		else
-			if((snake.getBodyLen()>1)&&(tempPoint1._d==3))
+			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==4)))
 				move_flag=Up;				
 		break;
 
@@ -211,7 +212,7 @@ int Game::SnakeControl(MoveDirection md)
 		if (snake.getBodyLen()==1)
 			move_flag=Down;	
 		else
-			if((snake.getBodyLen()>1)&&(tempPoint1._d==4))
+			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==4)))
 				move_flag=Down;
 		break;
 	
