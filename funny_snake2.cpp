@@ -24,11 +24,12 @@
 #include "game.h"
 #include "unit.h"
 
-
+/*
 #define border_x_min (col_max-9*col_max/10)
 #define border_x_max (col_max-2*col_max/10)
 #define border_y_min (row_max-9*row_max/10)
 #define border_y_max (row_max-2*row_max/10)
+*/
 
 using namespace std;
 
@@ -51,15 +52,29 @@ char buf1[2]={'0',0x00};
 int level;
 
 
+
+
+
 WINDOW *MainMenu, *tuneMenu;
+
+Fild gameFild;
 
 	
 //============================= MAIN ======================================
 		
 int main (int argc, char** argv)
 {	
+	Game *GameController;
+
 	init_scr(); // initialize ncurses;
+
+	gameFild.border_x_min=col_max-9*col_max/10;
+	gameFild.border_x_max=col_max-2*col_max/10;
+	gameFild.border_y_min=row_max-9*row_max/10;
+	gameFild.border_y_max=row_max-2*row_max/10;
 	
+	GameController=new Game(gameFild);
+
 	CreateGameFild();  //---------- Make game fild ----------------------
 
 	//--------------------- main cicle---------------		
@@ -166,15 +181,15 @@ int row, col;
 		for (col=0;col<=col_max;col++)
 		{
 			move(row,col);
-			if ((row>=border_y_min)&&(row<=border_y_max)&&(col>=border_x_min)&&(col<=border_x_max))
+			if ((row>=gameFild.border_y_min)&&(row<=gameFild.border_y_max)&&(col>=gameFild.border_x_min)&&(col<=gameFild.border_x_max))
 			{
-				if (row==border_y_min)
+				if (row==gameFild.border_y_min)
 					addch('X');
-				if ((row>=border_y_min)&&(row<=border_y_max)&&(col==border_x_min))
+				if ((row>=gameFild.border_y_min)&&(row<=gameFild.border_y_max)&&(col==gameFild.border_x_min))
 					addch('X');
-				if ((row>=border_y_min)&&(row<=border_y_max)&&(col==border_x_max))
+				if ((row>=gameFild.border_y_min)&&(row<=gameFild.border_y_max)&&(col==gameFild.border_x_max))
 					addch('X');
-				if (row==border_y_max)
+				if (row==gameFild.border_y_max)
 					addch('X');
 			}
 			addch(' ');
@@ -185,7 +200,7 @@ int row, col;
 
 void gameMenuOpen()
 {
-	MainMenu=newwin(10,20,border_y_max/2,border_x_max/2);
+	MainMenu=newwin(10,20,gameFild.border_y_max/2,gameFild.border_x_max/2);
 	wbkgd(MainMenu,COLOR_PAIR(2));
 	wattron(MainMenu,COLOR_PAIR(2));
 	box(MainMenu,ACS_VLINE,ACS_HLINE);
@@ -207,4 +222,3 @@ void gameMenuClose()
 	delwin(MainMenu);
 	MainMenu=NULL;
 }
-
