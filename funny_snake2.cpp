@@ -85,51 +85,58 @@ int main (int argc, char** argv)
 		
 		if (ch=='m')
 		{
-			GST=1;
+			//GST=1;
+			GameController->setGameStatus(game_stop);
 
 		}
 
 
-		if (GST==1)
+		if (/*(GST==1) &&*/ (GameController->getGameStatus()==game_stop))
 		{
 			if (!MainMenu)
 				gameMenuOpen();
 			switch (ch)
 			{
 			case 'e':
-				GST=0;
+				//GST=0;
+				GameController->setGameStatus(game_exit);
+				GameController->GameOver();
 				gameMenuClose();
 				ch='q';
 				break;
 			case 'n':
-				GST=2;
+				//GST=2;
+				GameController->GameOver();
 				gameMenuClose();
-				CreateGameFild();
-
+				CreateGameFild();				
+				GameController->setGameStatus(game_new);
+				GameController->newGameUnitsSet();
+				GameController->setGameStatus(game_on);
 				break;
 			case '1'...'9':
 				buf1[0]=ch;
 				level=atoi(buf1);
 				break;
 			case 'c':
-				if(1)
-				{
-					GST=2;
+	//			if(1)
+	//			{
+					//GST=2;
+					GameController->setGameStatus(game_on);
 					gameMenuClose();
 					CreateGameFild();
-				}
+	//			}
 				break;
 			
 			}		
 		}	
 				
 				
-		if (GST==game_on)
+		if (/*(GST==game_on)&&*/(GameController->getGameStatus()==game_on) )
 		{
 			switch(ch)
 			{
 				case KEY_LEFT:	
-					break;			
+						break;			
 				case KEY_RIGHT:
 						break;
 				case KEY_UP:	

@@ -18,6 +18,8 @@ Game::Game(const Fild game_fild):snake(),rabbit()
 	GST=game_stop; 
 	GameFild=game_fild;
 	rabbitStatus=unit_is_dead;		
+	GameScore=0;
+	GameLevel=1;
 
 	srand(time(0));
 }
@@ -36,6 +38,7 @@ int Game::newGameUnitsSet()
 	
 	rabbitStatus=unit_is_dead;
 	RabbitFactory();
+	GameScore=0;
 //
 	return 1;
 	}
@@ -99,6 +102,7 @@ int Game::SnakeMove()
 //-------------body control and manage-------------
 		if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y)){
 			snake.addNewElementInUnitBody(tempPoint2);
+			GameScore++;
 			rabbitStatus==unit_is_dead;	
 		}
 //-------------------------------------------------
@@ -234,7 +238,11 @@ int Game::GameOver()
 	return 1;
 }
 
+int Game::getGameScore()
+{
+	return GameScore;
 
+}
 
 
 

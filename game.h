@@ -13,6 +13,10 @@
 typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new} GameStatus;
 typedef enum _unit_status{unit_is_dead=0,unit_is_alive} UnitStatus;
 typedef enum _move_direction{Left=1,Right,Up,Down} MoveDirection;
+typedef enum _level{easy=0,midle,hi,master} Level;
+
+
+
 
 struct Fild
 { 
@@ -26,13 +30,16 @@ struct Fild
 class Game
 {
 private:
+	int GameLevel;
+	int GameScore;
+
 	Snake snake;
 	Rabbit rabbit;
 	GameStatus GST;	
 	Fild GameFild;
 	UnitStatus rabbitStatus;
 	MoveDirection move_flag;
-
+	
 	Game();
 
 public:
@@ -49,6 +56,7 @@ public:
 	int SnakeControl(MoveDirection md);
 	int SnakeMove();
 	int GameOver();
+	int getGameScore();
 };
 
 
