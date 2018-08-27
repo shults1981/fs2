@@ -227,6 +227,13 @@ int Game::SnakeControl(MoveDirection md)
 	return 1;
 }
 
+
+Fild Game::getGameFild()
+{
+	return GameFild; 
+}
+
+
 int Game::GameOver()
 {
 
@@ -244,8 +251,10 @@ int Game::getGameScore()
 
 }
 
-
-
+int Game::getGameLevel()
+{
+	return GameLevel;
+}
 
 
 

@@ -19,6 +19,9 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
+#include <signal.h>
+#include <sys/time.h>
+
 
 //-----------------------------
 #include "game.h"
@@ -41,6 +44,9 @@ void CreateGameFild();
 void destr_scr();
 void gameMenuOpen();
 void gameMenuClose();
+void render(Game &GameController);
+void GTI(int signom);
+
 
 
 static int row,col;
@@ -50,8 +56,9 @@ static int GST;
 static char str_BUF1[5],str_BUF2[5];
 char buf1[2]={'0',0x00};
 int level;
-
-
+int GameImpuls=0;
+int ImpulsFront=0;
+int Watchdog=0;
 
 
 
@@ -64,18 +71,30 @@ Fild gameFild;
 		
 int main (int argc, char** argv)
 {	
-	Game *GameController;
+	struct itimerval tmr1;
+	tmr1.it_value.tv_sec=0;
+	tmr1.it_value.tv_usec=200000;
+	tmr1.it_interval.tv_sec=0;
+	tmr1.it_interval.tv_usec=200000;
 
+	signal(SIGALRM,GTI);// registring game timer
+
+	
 	init_scr(); // initialize ncurses;
+	
 
 	gameFild.border_x_min=col_max-9*col_max/10;
 	gameFild.border_x_max=col_max-2*col_max/10;
 	gameFild.border_y_min=row_max-9*row_max/10;
 	gameFild.border_y_max=row_max-2*row_max/10;
-	
+
+	Game *GameController;
 	GameController=new Game(gameFild);
 
-	CreateGameFild();  //---------- Make game fild ----------------------
+
+	CreateGameFild();  //---------- Draw game fild ----------------------
+
+	setitimer(ITIMER_REAL,&tmr1,NULL); // start game ciclic timer
 
 	//--------------------- main cicle---------------		
 
@@ -135,17 +154,25 @@ int main (int argc, char** argv)
 		{
 			switch(ch)
 			{
-				case KEY_LEFT:	
+				case KEY_LEFT:
+						GameController->SnakeControl(Left);	
 						break;			
 				case KEY_RIGHT:
+						GameController->SnakeControl(Right);
 						break;
-				case KEY_UP:	
+				case KEY_UP:
+						GameController->SnakeControl(Up);
 						break;
 				case KEY_DOWN:
+						GameController->SnakeControl(Down);
 						break; 
 			
 				default : break;
 			}
+		
+		//Watchdog=GameImpuls;
+		//if ()
+
 		}
 	}
 
@@ -229,3 +256,46 @@ void gameMenuClose()
 	delwin(MainMenu);
 	MainMenu=NULL;
 }
+
+
+void render(Game &GameCntrl)
+{
+	Point pen;
+	Fild pole;
+
+	pole=GameCntrl.getGameFild();
+		
+	if (GameCntrl.getGameStatus()==game_on){
+		GameCntrl.getRabbitPlace(pen);
+		mvaddch(pen._y,pen._y,'*');
+
+		for (int i=0;i<GameCntrl.getSnakeLen();i++){
+			if (GameCntrl.getSnakeBodyPartsCords(i,pen)){
+			        // previos frame
+				mvaddch(pen._x,pen._y,'@');
+			}
+			
+			sprintf(str_BUF1,"%d",GameCntrl.getGameScore());
+			mvaddstr(pole.border_y_max+3,pole.border_x_min,"Score-");			
+			mvaddstr(pole.border_y_max+3,pole.border_x_min+7,str_BUF1);		
+			sprintf(str_BUF2,"%d",GameCntrl.getGameLevel());
+			mvaddstr(pole.border_y_max+4,pole.border_x_min,"Level-");			
+			mvaddstr(pole.border_y_max+4,pole.border_x_min+7,str_BUF2);			}
+	
+	}
+
+	if (GameCntrl.getGameStatus()==game_over){
+		mvaddstr(pole.border_y_max/2,pole.border_x_max/2-5,"G A M E   O V E R !!!!");
+	}
+
+	wrefresh(stdscr);
+
+}
+
+void GTI (int signom)
+{
+	sprintf(str_BUF2,"%d",GameImpuls);
+	mvaddstr(gameFild.border_y_max+2,gameFild.border_x_min,str_BUF2);
+	GameImpuls++;
+}
+

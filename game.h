@@ -55,8 +55,10 @@ public:
 	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
 	int SnakeControl(MoveDirection md);
 	int SnakeMove();
+	Fild getGameFild();
 	int GameOver();
 	int getGameScore();
+	int getGameLevel();
 };
 
 
