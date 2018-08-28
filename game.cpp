@@ -63,10 +63,10 @@ void Game::RabbitFactory()
 {
 	if (!rabbitStatus){
 		Point bufVar;
-		bufVar._x=16;//--------------------
-		bufVar._y=17;//-------------------
-//		bufVar._x=GameFild.border_x_min+rand()%(GameFild.border_x_max-GameFild.border_x_min-1)+1;
-//		bufVar._y=GameFild.border_y_min+rand()%(GameFild.border_y_max-GameFild.border_y_min-1)+1;
+//		bufVar._x=16;//--------------------
+//		bufVar._y=17;//-------------------
+		bufVar._x=GameFild.border_x_min+rand()%(GameFild.border_x_max-GameFild.border_x_min-1)+1;
+		bufVar._y=GameFild.border_y_min+rand()%(GameFild.border_y_max-GameFild.border_y_min-1)+1;
 		bufVar._d=0;
 		rabbit.setBodyElement(0,bufVar);
 		rabbitStatus=unit_is_alive;
@@ -103,14 +103,15 @@ int Game::SnakeMove()
 		if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y)){
 			snake.addNewElementInUnitBody(tempPoint2);
 			GameScore++;
-			rabbitStatus==unit_is_dead;	
+			rabbitStatus==unit_is_dead;
+			RabbitFactory();	
 		}
 //-------------------------------------------------
-		std::cout<<move_flag<<std::endl;
+		//std::cout<<move_flag<<std::endl;
 		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=move_flag;
 			snake.setBodyElement(0,tempPoint1);
-			std::cout<<"OOO I am hear!"<<std::endl;
+			//std::cout<<"OOO I am hear!"<<std::endl;
 			if((snake.getBodyLen()>1) &&  (snake.getBodyTPANum()<=snake.getBodyLen()-1))
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}

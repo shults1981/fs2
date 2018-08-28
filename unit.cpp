@@ -473,7 +473,7 @@ int Snake::addNewElementInUnitBody(const Point &PointSRC)
 			
 			default: break;
 			}
-			std::cout<<"adding --"<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<std::endl;//---------------------
+			//std::cout<<"adding --"<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<std::endl;//---------------------
 			return BodyCords->addElementInBack(bufVar);
 		}
 	}

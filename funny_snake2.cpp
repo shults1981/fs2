@@ -10,7 +10,7 @@
 * Data create                    :  01/03/2018
 
 * Purpose                        :  classical game "SNAKE";
-								    testing library ncurses #2
+				    testing library ncurses #2
 
 |****************************************************************
 |****************************************************************
@@ -44,7 +44,7 @@ void CreateGameFild();
 void destr_scr();
 void gameMenuOpen();
 void gameMenuClose();
-void render(Game &GameController);
+void render(Game *GameController,int FrameFlag);
 void GTI(int signom);
 
 
@@ -53,7 +53,7 @@ static int row,col;
 static int row_max,col_max;
 static int ch;
 static int GST;
-static char str_BUF1[5],str_BUF2[5];
+static char str_BUF1[5],str_BUF2[5],str_BUF3[5];
 char buf1[2]={'0',0x00};
 int level;
 int GameImpuls=0;
@@ -104,53 +104,52 @@ int main (int argc, char** argv)
 		
 		if (ch=='m')
 		{
-			//GST=1;
 			GameController->setGameStatus(game_stop);
+			ImpulsFront=0;
 
 		}
 
 
-		if (/*(GST==1) &&*/ (GameController->getGameStatus()==game_stop))
+		if (GameController->getGameStatus()==game_stop)
 		{
 			if (!MainMenu)
 				gameMenuOpen();
 			switch (ch)
 			{
 			case 'e':
-				//GST=0;
 				GameController->setGameStatus(game_exit);
 				GameController->GameOver();
 				gameMenuClose();
 				ch='q';
 				break;
 			case 'n':
-				//GST=2;
 				GameController->GameOver();
 				gameMenuClose();
 				CreateGameFild();				
 				GameController->setGameStatus(game_new);
 				GameController->newGameUnitsSet();
 				GameController->setGameStatus(game_on);
+				GameController->SnakeControl(Right);
+				
 				break;
 			case '1'...'9':
 				buf1[0]=ch;
 				level=atoi(buf1);
 				break;
 			case 'c':
-	//			if(1)
-	//			{
-					//GST=2;
+				if(GameController->getGameStatus()!=game_over)
+				{
 					GameController->setGameStatus(game_on);
 					gameMenuClose();
 					CreateGameFild();
-	//			}
+				}
 				break;
 			
 			}		
 		}	
 				
 				
-		if (/*(GST==game_on)&&*/(GameController->getGameStatus()==game_on) )
+		if (GameController->getGameStatus()==game_on)
 		{
 			switch(ch)
 			{
@@ -170,8 +169,24 @@ int main (int argc, char** argv)
 				default : break;
 			}
 		
-		//Watchdog=GameImpuls;
-		//if ()
+			if (GameImpuls!=Watchdog)
+			{
+				ImpulsFront=1;
+				Watchdog=GameImpuls;
+			}
+			else 
+			{
+				ImpulsFront=0;
+			}
+
+			if (ImpulsFront)
+			{
+				render(GameController,0);
+				GameController->SnakeMove();
+				render(GameController,1);
+			}
+		
+			//render(GameController);
 
 		}
 	}
@@ -258,33 +273,42 @@ void gameMenuClose()
 }
 
 
-void render(Game &GameCntrl)
+void render(Game *GameCntrl,int FrameFlag)
 {
 	Point pen;
 	Fild pole;
 
-	pole=GameCntrl.getGameFild();
-		
-	if (GameCntrl.getGameStatus()==game_on){
-		GameCntrl.getRabbitPlace(pen);
-		mvaddch(pen._y,pen._y,'*');
+/*
+	sprintf(str_BUF3,"%d",ImpulsFront);
+	mvaddstr(gameFild.border_y_max/2,gameFild.border_x_min/2-5,str_BUF3);
+*/
 
-		for (int i=0;i<GameCntrl.getSnakeLen();i++){
-			if (GameCntrl.getSnakeBodyPartsCords(i,pen)){
-			        // previos frame
-				mvaddch(pen._x,pen._y,'@');
+
+	pole=GameCntrl->getGameFild();
+		
+	if (GameCntrl->getGameStatus()==game_on){
+		GameCntrl->getRabbitPlace(pen);
+		mvaddch(pen._y,pen._x,'*');
+
+		for (int i=0;i<GameCntrl->getSnakeLen();i++){
+
+			if (GameCntrl->getSnakeBodyPartsCords(i,pen)){
+			        if (FrameFlag)
+					mvaddch(pen._y,pen._x,'@');
+				else
+					mvaddch(pen._y,pen._x,' ');
 			}
-			
-			sprintf(str_BUF1,"%d",GameCntrl.getGameScore());
+		}
+			sprintf(str_BUF1,"%d",GameCntrl->getGameScore());
 			mvaddstr(pole.border_y_max+3,pole.border_x_min,"Score-");			
 			mvaddstr(pole.border_y_max+3,pole.border_x_min+7,str_BUF1);		
-			sprintf(str_BUF2,"%d",GameCntrl.getGameLevel());
+			sprintf(str_BUF2,"%d",GameCntrl->getGameLevel());
 			mvaddstr(pole.border_y_max+4,pole.border_x_min,"Level-");			
-			mvaddstr(pole.border_y_max+4,pole.border_x_min+7,str_BUF2);			}
+			mvaddstr(pole.border_y_max+4,pole.border_x_min+7,str_BUF2);			
 	
 	}
 
-	if (GameCntrl.getGameStatus()==game_over){
+	if (GameCntrl->getGameStatus()==game_over){
 		mvaddstr(pole.border_y_max/2,pole.border_x_max/2-5,"G A M E   O V E R !!!!");
 	}
 
