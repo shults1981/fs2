@@ -45,7 +45,18 @@ int Game::newGameUnitsSet()
 	else
 		return 0;
 }
-int Game::setGameStatus(GameStatus gst){ GST=gst; }
+
+int Game::setGameStatus(GameStatus gst)
+{ 
+	GST=gst; 
+
+
+
+	return 0;
+}
+
+
+
 GameStatus Game::getGameStatus(){ return GST; }
 
 
@@ -217,7 +228,7 @@ int Game::SnakeControl(MoveDirection md)
 		if (snake.getBodyLen()==1)
 			move_flag=Down;	
 		else
-			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==4)))
+			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==3)))
 				move_flag=Down;
 		break;
 	
