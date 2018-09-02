@@ -36,24 +36,15 @@ int Game::newGameUnitsSet()
 		bufVar._d=1;
 		snake.addNewElementInUnitBody(bufVar);		
 	
-	rabbitStatus=unit_is_dead;
-	RabbitFactory();
-	GameScore=0;
-//
-	return 1;
+		rabbitStatus=unit_is_dead;
+		RabbitFactory();
+		GameScore=0;
+		return 1;
 	}
 	else
 		return 0;
 }
-
-int Game::setGameStatus(GameStatus gst)
-{ 
-	GST=gst; 
-
-
-
-	return 0;
-}
+int Game::setGameStatus(GameStatus gst){ GST=gst; }
 
 
 
@@ -114,13 +105,13 @@ int Game::SnakeMove()
 		if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y)){
 			snake.addNewElementInUnitBody(tempPoint2);
 			GameScore++;
-			rabbitStatus==unit_is_dead;
+			rabbitStatus=unit_is_dead;
 			RabbitFactory();	
 		}
 //-------------------------------------------------
 		//std::cout<<move_flag<<std::endl;
 		if (tempPoint1._d!=(int)move_flag){
-			tempPoint1._d=move_flag;
+			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
 			//std::cout<<"OOO I am hear!"<<std::endl;
 			if((snake.getBodyLen()>1) &&  (snake.getBodyTPANum()<=snake.getBodyLen()-1))

@@ -15,7 +15,7 @@ PointArr::PointArr()
 {
 //std::cout<<".....class PoinArr costructor_1..... "<<std::endl;
 
-	arrLen=0;
+	arrLen=1;
 	pArr=new Point;
 	if (pArr){
 		pArr->_x=0;
@@ -30,12 +30,13 @@ PointArr::PointArr(int Len)
 
 	if (Len==0){
 		arrLen=0;
-		pArr=new Point;
+		pArr=NULL;
+	/*	pArr=new Point;
 		if (pArr){
 			pArr->_x=0;
 			pArr->_y=0;
 			pArr->_d=0;
-		}
+		}*/
 	}
 	else {
 		arrLen=Len;
@@ -121,10 +122,10 @@ int PointArr::addElementInBack(const Point &PointSRC)
 {
 	Point *tVar1,*tVar2;
 
-	if (arrLen)
+	//if (arrLen)
 		arrLen++;
-	else 
-		arrLen=+2;
+	//else 
+	//	arrLen=+2;
 
 	tVar1=new Point[arrLen];
 	if (tVar1){
@@ -417,13 +418,13 @@ int Unit::ClearBodyAndTPA()
 	tempVar._x=0;
 	tempVar._y=0;
 	tempVar._d=0;
-	for(int i=1;i<BodyCords->getLen();i++)
+	for(int i=0;i<BodyCords->getLen();i++)
 		BodyCords->delElementFromBack();
-	for (int i=1;i<BodyTPA->getLen();i++)
+	for (int i=0;i<BodyTPA->getLen();i++)
 		BodyTPA->delElementFromBack();
 
 	BodyCords->setElement(tempVar,0);
-	BodyTPA->setElement(tempVar,0);
+	//BodyTPA->setElement(tempVar,0);
 
 	return 1;
 			
