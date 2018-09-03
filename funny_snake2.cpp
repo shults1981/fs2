@@ -123,6 +123,7 @@ int main (int argc, char** argv)
 				ch='q';
 				break;
 			case 'n':
+				GameController->setGameStatus(game_over);
 				GameController->GameOver();
 				gameMenuClose();
 				CreateGameFild();				

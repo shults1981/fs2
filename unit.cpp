@@ -418,11 +418,14 @@ int Unit::ClearBodyAndTPA()
 	tempVar._x=0;
 	tempVar._y=0;
 	tempVar._d=0;
-	for(int i=0;i<BodyCords->getLen();i++)
-		BodyCords->delElementFromBack();
-	for (int i=0;i<BodyTPA->getLen();i++)
-		BodyTPA->delElementFromBack();
-
+	if (BodyCords->getLen()>1){
+		for(int i=0;i<BodyCords->getLen();i++)
+			BodyCords->delElementFromBack();
+	}
+	if (BodyTPA->getLen()>0){
+		for (int i=0;i<BodyTPA->getLen();i++)
+			BodyTPA->delElementFromBack();
+	}
 	BodyCords->setElement(tempVar,0);
 	//BodyTPA->setElement(tempVar,0);
 
