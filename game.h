@@ -37,7 +37,7 @@ private:
 	Rabbit rabbit;
 	GameStatus GST;	
 	Fild GameFild;
-	UnitStatus rabbitStatus;
+	UnitStatus rabbitStatus,snakeStatus;
 	MoveDirection move_flag;
 	
 	Game();
