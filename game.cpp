@@ -174,7 +174,7 @@ int Game::SnakeMove()
 			}
 			else {
 				GST=game_over;
-			//	std::cout<<"______O_o______"<<std::endl;
+				std::cout<<"______O_o______"<<std::endl;
 			}
 		}
 		

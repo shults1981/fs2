@@ -170,25 +170,23 @@ int main (int argc, char** argv)
 				default : break;
 			}
 		
-			if (GameImpuls!=Watchdog)
-			{
+			if (GameImpuls!=Watchdog){
 				ImpulsFront=1;
 				Watchdog=GameImpuls;
 			}
-			else 
-			{
+			else {
 				ImpulsFront=0;
 			}
 
-			if (ImpulsFront)
-			{
+			if (ImpulsFront){
 				render(GameController,0);
-				GameController->SnakeMove();
+				
+				if (GameController->getGameStatus()!=game_over)
+					GameController->SnakeMove();
+				else std::cout<<"A-A"<<std::endl;
+
 				render(GameController,1);
 			}
-		
-			//render(GameController);
-
 		}
 	}
 
