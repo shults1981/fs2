@@ -116,12 +116,12 @@ int Game::SnakeMove()
 			if((snake.getBodyLen()>1) &&  (snake.getBodyTPANum()<=snake.getBodyLen()-1))
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
-		
-		for (i=0;i<snake.getBodyLen();i++){
-			turn_flag=0;
-			snake.getBodyCords(0,tempPoint1);
-			if ((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&
-				(tempPoint1._y<GameFild.border_y_max)){
+
+		snake.getBodyCords(0,tempPoint1);
+		if ((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&
+		(tempPoint1._y<GameFild.border_y_max)) {
+			for (i=0;i<snake.getBodyLen();i++){
+				turn_flag=0;
 				snake.getBodyCords(i,tempPoint2);
 				if(snake.getBodyTPANum()){
 					for(j=snake.getBodyTPANum()-1;j>=0;j--){
@@ -172,12 +172,13 @@ int Game::SnakeMove()
 					snake.setBodyElement(i,tempPoint2);
 				}
 			}
-			else {
-				GST=game_over;
-				std::cout<<"______O_o______"<<std::endl;
-			}
 		}
-		
+		else {
+			GST=game_over;
+			snakeStatus=unit_is_dead;
+		//	std::cout<<"______O_o______"<<std::endl;
+		//      return 1;
+		}
 	}
 	return 1;
 }
@@ -258,6 +259,11 @@ int Game::getGameScore()
 int Game::getGameLevel()
 {
 	return GameLevel;
+}
+
+int Game::DBG_f1()
+{
+	return snake.getBodyTPANum();
 }
 
 

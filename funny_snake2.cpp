@@ -152,6 +152,26 @@ int main (int argc, char** argv)
 				
 		if (GameController->getGameStatus()==game_on)
 		{
+		
+			if (GameImpuls!=Watchdog){
+				ImpulsFront=1;
+				Watchdog=GameImpuls;
+			}
+			else {
+				ImpulsFront=0;
+			}
+
+			if (ImpulsFront){
+				render(GameController,0);
+				
+				if (GameController->getGameStatus()==game_on)
+					GameController->SnakeMove();
+				else std::cout<<"A-A"<<std::endl;
+
+				render(GameController,1);
+			}
+
+
 			switch(ch)
 			{
 				case KEY_LEFT:
@@ -169,24 +189,7 @@ int main (int argc, char** argv)
 			
 				default : break;
 			}
-		
-			if (GameImpuls!=Watchdog){
-				ImpulsFront=1;
-				Watchdog=GameImpuls;
-			}
-			else {
-				ImpulsFront=0;
-			}
 
-			if (ImpulsFront){
-				render(GameController,0);
-				
-				if (GameController->getGameStatus()!=game_over)
-					GameController->SnakeMove();
-				else std::cout<<"A-A"<<std::endl;
-
-				render(GameController,1);
-			}
 		}
 	}
 
@@ -304,7 +307,14 @@ void render(Game *GameCntrl,int FrameFlag)
 			sprintf(str_BUF2,"%d",GameCntrl->getGameLevel());
 			mvaddstr(pole.border_y_max+4,pole.border_x_min,"Level-");			
 			mvaddstr(pole.border_y_max+4,pole.border_x_min+7,str_BUF2);			
-	
+		//-----------------------------debug output ------------------------------	
+			sprintf(str_BUF1,"%d",GameCntrl->getSnakeLen());
+			mvaddstr(pole.border_y_max+3,pole.border_x_min+20,"Sn Len-");			
+			mvaddstr(pole.border_y_max+3,pole.border_x_min+27,str_BUF1);		
+			sprintf(str_BUF2,"%d",GameCntrl->DBG_f1());
+			mvaddstr(pole.border_y_max+4,pole.border_x_min+20,"Sn TPA Len-");			
+			mvaddstr(pole.border_y_max+4,pole.border_x_min+32,str_BUF2);			
+
 	}
 
 	if (GameCntrl->getGameStatus()==game_over){

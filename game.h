@@ -59,6 +59,8 @@ public:
 	int GameOver();
 	int getGameScore();
 	int getGameLevel();
+
+	int DBG_f1();
 };
 
 
