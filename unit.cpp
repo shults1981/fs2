@@ -163,7 +163,7 @@ int PointArr::delElementFromBack()
 	if(arrLen!=0){
 		tVar1=new Point[arrLen];
 		if (tVar1){
-			for(int i=0;i<(arrLen-1);i++){
+			for(int i=0;i<(arrLen);i++){
 				tVar1[i]._x=pArr[i]._x;
 				tVar1[i]._y=pArr[i]._y;
 				tVar1[i]._d=pArr[i]._d;
@@ -415,16 +415,21 @@ int Unit::getBodyTPA(int TPAIndex, Point &PointDEST)
 int Unit::ClearBodyAndTPA()
 {
 	Point tempVar;
+	int k;
 	tempVar._x=0;
 	tempVar._y=0;
 	tempVar._d=0;
-	if (BodyCords->getLen()>1){
-		for(int i=0;i<BodyCords->getLen();i++)
+	if ((k=BodyCords->getLen())>1){
+	//	for(int i=0;i<BodyCords->getLen();i++)
+		for(int i=0;i<k-1;i++)
 			BodyCords->delElementFromBack();
+	//		std::cout<<"_________________o_O__"<<std::endl;//----
 	}
-	if (BodyTPA->getLen()>0){
-		for (int i=0;i<BodyTPA->getLen();i++)
+	if ((k=BodyTPA->getLen())>0){
+		//for (int i=0;i<BodyTPA->getLen();i++)
+		for (int i=0;i<k;i++)
 			BodyTPA->delElementFromBack();
+	//		std::cout<<"__a_A__"<<std::endl;//----
 	}
 	BodyCords->setElement(tempVar,0);
 	//BodyTPA->setElement(tempVar,0);

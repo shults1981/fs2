@@ -318,7 +318,7 @@ void render(Game *GameCntrl,int FrameFlag)
 	}
 
 	if (GameCntrl->getGameStatus()==game_over){
-		mvaddstr(pole.border_y_max/2,pole.border_x_max/2-5,"G A M E   O V E R !!!!");
+		mvaddstr(pole.border_y_max/2-5,pole.border_x_max/2-5,"G A M E   O V E R !!!!");
 	}
 
 	wrefresh(stdscr);
