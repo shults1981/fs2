@@ -45,7 +45,20 @@ int Game::newGameUnitsSet()
 	else
 		return 0;
 }
-int Game::setGameStatus(GameStatus gst){ GST=gst; }
+int Game::setGameStatus(GameStatus gst)
+{
+	GST=gst;
+
+	if ((GST==game_over)||(GST==game_exit))
+		GameOver();
+
+	if (GST==game_new){
+		GameOver();   ///?????????????????????????????????????????
+		newGameUnitsSet();
+		SnakeControl(static_cast<MoveDirection>(rand()%4+1));//rand()%4+1
+	}
+	return 1;
+ }
 
 
 
@@ -92,9 +105,10 @@ int  Game::getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST)
 }
 
 
-int Game::SnakeMove()
+int Game::SnakeMoveToOneStep()
 {
 	int i,j,turn_flag;
+	unsigned int kill_self=0,border_crash=0;
 
 	if (GST==game_on){
 		Point tempPoint1,tempPoint2,tempPoint3;
@@ -113,72 +127,81 @@ int Game::SnakeMove()
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
 			//--------------------------------------------------
-			if((snake.getBodyLen()>1) &&  (snake.getBodyTPANum()<=snake.getBodyLen()-1))
+			if((snake.getBodyLen()>1) && (snake.getBodyTPANum()<=snake.getBodyLen()-1))
 				snake.addNewElementInBodyTPA(tempPoint1);
+		}
+			
+	
+		snake.getBodyCords(0,tempPoint1);
+		for (i=0;i<snake.getBodyLen();i++){
+			turn_flag=0;
+			snake.getBodyCords(i,tempPoint2);
+			if(snake.getBodyTPANum()){
+				for(j=snake.getBodyTPANum()-1;j>=0;j--){
+					snake.getBodyTPA(j,tempPoint3);
+					if((tempPoint2._x==tempPoint3._x) && (tempPoint2._y==tempPoint3._y)){
+						switch(tempPoint3._d)
+						{
+						case 1:
+							tempPoint2._x--;
+							break;
+						case 2:
+							tempPoint2._x++;
+							break;
+						case 3:
+							tempPoint2._y--;
+							break;
+						case 4:
+							tempPoint2._y++;
+							break;
+						default:break;
+						}
+						tempPoint2._d=tempPoint3._d;
+						snake.setBodyElement(i,tempPoint2);
+						if((i==snake.getBodyLen()-1) && (j==0))
+							snake.delElementFromBodyTPA();
+						turn_flag=1;
+					}
+				}		
+			}
+			if (!turn_flag){
+				switch(tempPoint2._d)
+				{
+				case 1:
+					tempPoint2._x--;
+					break;
+				case 2:
+					tempPoint2._x++;
+					break;
+				case 3:
+					tempPoint2._y--;
+					break;
+				case 4:
+					tempPoint2._y++;
+					break;
+				default:
+					break;
+				}
+				snake.setBodyElement(i,tempPoint2);
+			}
 		}
 
 		snake.getBodyCords(0,tempPoint1);
-		if ((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&
-		(tempPoint1._y<GameFild.border_y_max)) {
-			for (i=0;i<snake.getBodyLen();i++){
-				turn_flag=0;
-				snake.getBodyCords(i,tempPoint2);
-				if(snake.getBodyTPANum()){
-					for(j=snake.getBodyTPANum()-1;j>=0;j--){
-						snake.getBodyTPA(j,tempPoint3);
-						if((tempPoint2._x==tempPoint3._x) && (tempPoint2._y==tempPoint3._y)){
-							switch(tempPoint3._d)
-							{
-							case 1:
-								tempPoint2._x--;
-								break;
-							case 2:
-								tempPoint2._x++;
-								break;
-							case 3:
-								tempPoint2._y--;
-								break;
-							case 4:
-								tempPoint2._y++;
-								break;
-							default:break;
-							}
-							tempPoint2._d=tempPoint3._d;
-							snake.setBodyElement(i,tempPoint2);
-							if((i==snake.getBodyLen()-1) && (j==0))
-								snake.delElementFromBodyTPA();
-							turn_flag=1;
-						}
-					}		
-				}
-				if (!turn_flag){
-					switch(tempPoint2._d)
-					{
-					case 1:
-						tempPoint2._x--;
-						break;
-					case 2:
-						tempPoint2._x++;
-						break;
-					case 3:
-						tempPoint2._y--;
-						break;
-					case 4:
-						tempPoint2._y++;
-						break;
-					default:
-						break;
-					}
-					snake.setBodyElement(i,tempPoint2);
-				}
-			}
+		border_crash=!((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&(tempPoint1._y<GameFild.border_y_max));		
+
+		for (i=1;i<snake.getBodyLen();i++){
+			snake.getBodyCords(i,tempPoint2);
+			if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y))
+				kill_self=1;			
 		}
-		else {
+			
+
+
+		if (border_crash /*||kill_self*/ ) {
 			GST=game_over;
 			snakeStatus=unit_is_dead;
-		//	std::cout<<"______O_o______"<<std::endl;
-		//      return 1;
 		}
+		else {	}
 	}
 	return 1;
 }

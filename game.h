@@ -54,7 +54,7 @@ public:
 	int getRabbitPlace(Point &PointDEST);
 	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
 	int SnakeControl(MoveDirection md);
-	int SnakeMove();
+	int SnakeMoveToOneStep();
 	Fild getGameFild();
 	int GameOver();
 	int getGameScore();

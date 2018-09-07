@@ -118,20 +118,15 @@ int main (int argc, char** argv)
 			{
 			case 'e':
 				GameController->setGameStatus(game_exit);
-				GameController->GameOver();
 				gameMenuClose();
 				ch='q';
 				break;
 			case 'n':
 				GameController->setGameStatus(game_over);
-				GameController->GameOver();
 				gameMenuClose();
 				CreateGameFild();				
 				GameController->setGameStatus(game_new);
-				GameController->newGameUnitsSet();
 				GameController->setGameStatus(game_on);
-				GameController->SnakeControl(Right);
-				
 				break;
 			case '1'...'9':
 				buf1[0]=ch;
@@ -165,7 +160,7 @@ int main (int argc, char** argv)
 				render(GameController,0);
 				
 				if (GameController->getGameStatus()==game_on)
-					GameController->SnakeMove();
+					GameController->SnakeMoveToOneStep();
 				else std::cout<<"A-A"<<std::endl;
 
 				render(GameController,1);
@@ -193,7 +188,7 @@ int main (int argc, char** argv)
 		}
 	}
 
-
+	delete GameController;
 	destr_scr();//-----------delete screen -------------
 
 	return 0;

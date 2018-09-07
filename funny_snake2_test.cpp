@@ -246,13 +246,13 @@ for (int i=0;i<gameCntr.getSnakeLen();i++){
 gameCntr.setGameStatus(game_on);
 cout<<"GST-"<<gameCntr.getGameStatus()<<endl;
 gameCntr.SnakeControl(Left);
-gameCntr.SnakeMove();
-gameCntr.SnakeMove();
-gameCntr.SnakeMove();
-gameCntr.SnakeMove();
+gameCntr.SnakeMoveToOneStep();
+gameCntr.SnakeMoveToOneStep();
+gameCntr.SnakeMoveToOneStep();
+gameCntr.SnakeMoveToOneStep();
 gameCntr.SnakeControl(Up);
-gameCntr.SnakeMove();
-gameCntr.SnakeMove();
+gameCntr.SnakeMoveToOneStep();
+gameCntr.SnakeMoveToOneStep();
 
 
 for (int i=0;i<gameCntr.getSnakeLen();i++){
