@@ -127,7 +127,7 @@ int Game::SnakeMoveToOneStep()
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
 			//--------------------------------------------------
-			if((snake.getBodyLen()>1) && (snake.getBodyTPANum()<=snake.getBodyLen()-1))
+			if((snake.getBodyLen()>1) && (snake.getBodyTPANum()<=(snake.getBodyLen()-1)))
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
 			
