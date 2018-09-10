@@ -8,8 +8,9 @@
 #include "game.h"
 #include <stdlib.h>
 #include <time.h>
-#include <iostream>
 
+#include <iostream>
+#include <fstream>
 
 
 
@@ -23,9 +24,11 @@ Game::Game(const Fild game_fild):snake(),rabbit()
 	GameLevel=1;
 
 	srand(time(0));
+	
+		
 }
 
-Game::~Game() {}
+Game::~Game() { }
 
 
 int Game::newGameUnitsSet()
@@ -129,12 +132,12 @@ int Game::SnakeMoveToOneStep()
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
 			//--------------------------------------------------
-			if((snake.getBodyLen()>1)  && (snake.getBodyTPANum()<=(snake.getBodyLen()-1))  )
+			if((snake.getBodyLen()>1)  && (snake.getBodyTPANum()<(snake.getBodyLen()))  )
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
 			
 	
-		snake.getBodyCords(0,tempPoint1);
+		//snake.getBodyCords(0,tempPoint1);
 		for (i=0;i<snake.getBodyLen();i++){
 			turn_flag=0;
 			snake.getBodyCords(i,tempPoint2);

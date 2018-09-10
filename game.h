@@ -10,6 +10,13 @@
 
 #include "unit.h"
 
+
+//=============== for DEBUG 
+#include <fstream>
+//-------------------------
+
+
+
 typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new} GameStatus;
 typedef enum _unit_status{unit_is_dead=0,unit_is_alive} UnitStatus;
 typedef enum _move_direction{Left=1,Right,Up,Down} MoveDirection;
@@ -41,6 +48,8 @@ private:
 	MoveDirection move_flag;
 	
 	Game();
+
+
 
 public:
 	Game(const Fild gamefild);
