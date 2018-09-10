@@ -113,21 +113,23 @@ int Game::SnakeMoveToOneStep()
 	if (GST==game_on){
 		Point tempPoint1,tempPoint2,tempPoint3;
 		snake.getBodyCords(0,tempPoint1);
-		rabbit.getBodyCords(0,tempPoint2);
+//		rabbit.getBodyCords(0,tempPoint2);
 //-------------body control and manage-------------
+/*
 		if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y)){
 			snake.addNewElementInUnitBody(tempPoint2);
 			GameScore++;
 			rabbitStatus=unit_is_dead;
 			RabbitFactory();	
 		}
+*/
 //-------------------------------------------------
 		//std::cout<<move_flag<<std::endl;
 		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
 			//--------------------------------------------------
-			if((snake.getBodyLen()>1) && (snake.getBodyTPANum()<=(snake.getBodyLen()-1)))
+			if((snake.getBodyLen()>1)  && (snake.getBodyTPANum()<=(snake.getBodyLen()-1))  )
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
 			
@@ -185,7 +187,17 @@ int Game::SnakeMoveToOneStep()
 				snake.setBodyElement(i,tempPoint2);
 			}
 		}
+//-------------body control and manage-------------
+		snake.getBodyCords(0,tempPoint1);
+		rabbit.getBodyCords(0,tempPoint2);
+		if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y)){
+			snake.addNewElementInUnitBody(tempPoint2);
+			GameScore++;
+			rabbitStatus=unit_is_dead;
+			RabbitFactory();	
+		}
 
+//-------------------------------------------------
 		snake.getBodyCords(0,tempPoint1);
 		border_crash=!((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&(tempPoint1._y<GameFild.border_y_max));		
 
