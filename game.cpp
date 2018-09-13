@@ -112,9 +112,9 @@ int Game::SnakeMoveToOneStep()
 {
 	int i,j,turn_flag;
 	unsigned int kill_self=0,border_crash=0;
+	Point tempPoint1,tempPoint2,tempPoint3;
 
 	if (GST==game_on){
-		Point tempPoint1,tempPoint2,tempPoint3;
 		snake.getBodyCords(0,tempPoint1);
 //		rabbit.getBodyCords(0,tempPoint2);
 //-------------body control and manage-------------
