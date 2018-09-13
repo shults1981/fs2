@@ -162,7 +162,7 @@ int Game::SnakeMoveToOneStep()
 						default:break;
 						}
 						tempPoint2._d=tempPoint3._d;
-						snake.setBodyElement(i,tempPoint2);
+						//snake.setBodyElement(i,tempPoint2);
 						if((i==snake.getBodyLen()-1) && (j==0))
 							snake.delElementFromBodyTPA();
 						turn_flag=1;
@@ -187,8 +187,9 @@ int Game::SnakeMoveToOneStep()
 				default:
 					break;
 				}
-				snake.setBodyElement(i,tempPoint2);
+		//		snake.setBodyElement(i,tempPoint2);
 			}
+			snake.setBodyElement(i,tempPoint2);
 		}
 //-------------body control and manage-------------
 		snake.getBodyCords(0,tempPoint1);

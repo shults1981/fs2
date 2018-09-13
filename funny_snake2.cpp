@@ -52,7 +52,8 @@ void GTI(int signom);
 static int row,col;
 static int row_max,col_max;
 static int ch;
-static int GST;
+static MoveDirection mvf;
+//static int GST;
 static char str_BUF1[5],str_BUF2[5],str_BUF3[5];
 char buf1[2]={'0',0x00};
 int level;
@@ -157,11 +158,13 @@ int main (int argc, char** argv)
 			}
 
 			if (ImpulsFront){
+			
 				render(GameController,0);
-				
-				if (GameController->getGameStatus()==game_on)
+	
+				GameController->SnakeControl(mvf);
+			//	if (GameController->getGameStatus()==game_on)
 					GameController->SnakeMoveToOneStep();
-				else std::cout<<"A-A"<<std::endl;
+			//	else std::cout<<"A-A"<<std::endl;
 
 				render(GameController,1);
 			}
@@ -170,16 +173,20 @@ int main (int argc, char** argv)
 			switch(ch)
 			{
 				case KEY_LEFT:
-						GameController->SnakeControl(Left);	
+						mvf=Left;					
+						//GameController->SnakeControl(Left);	
 						break;			
 				case KEY_RIGHT:
-						GameController->SnakeControl(Right);
+						mvf=Right;
+						//GameController->SnakeControl(Right);
 						break;
 				case KEY_UP:
-						GameController->SnakeControl(Up);
+						mvf=Up;
+						//GameController->SnakeControl(Up);
 						break;
 				case KEY_DOWN:
-						GameController->SnakeControl(Down);
+						mvf=Down;
+						//GameController->SnakeControl(Down);
 						break; 
 			
 				default : break;
