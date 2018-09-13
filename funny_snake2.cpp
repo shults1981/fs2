@@ -18,6 +18,8 @@
 #include <iostream>
 #include <ncurses.h>
 #include <stdlib.h>
+#include <fstream>
+
 
 #include <signal.h>
 #include <sys/time.h>
@@ -67,11 +69,16 @@ WINDOW *MainMenu, *tuneMenu;
 
 Fild gameFild;
 
-	
+
+//ofstream fout;
+
 //============================= MAIN ======================================
 		
 int main (int argc, char** argv)
 {	
+	
+	//fout.open("fs2.log");
+	
 	struct itimerval tmr1;
 	tmr1.it_value.tv_sec=0;
 	tmr1.it_value.tv_usec=200000;
@@ -197,6 +204,8 @@ int main (int argc, char** argv)
 
 	delete GameController;
 	destr_scr();//-----------delete screen -------------
+	
+	//fout.close();
 
 	return 0;
 }	
@@ -297,12 +306,18 @@ void render(Game *GameCntrl,int FrameFlag)
 		for (int i=0;i<GameCntrl->getSnakeLen();i++){
 
 			if (GameCntrl->getSnakeBodyPartsCords(i,pen)){
-			        if (FrameFlag)
+			        if (FrameFlag){
 					mvaddch(pen._y,pen._x,'@');
+					//if (GameCntrl->getSnakeLen()>3)
+					//	fout<<"x-"<<pen._x<<"  y-"<<pen._y<<std::endl;
+				}	
 				else
 					mvaddch(pen._y,pen._x,' ');
 			}
 		}
+			//if (GameCntrl->getSnakeLen()>3)
+			//	fout<<"=========="<<std::endl;
+
 			sprintf(str_BUF1,"%d",GameCntrl->getGameScore());
 			mvaddstr(pole.border_y_max+3,pole.border_x_min,"Score-");			
 			mvaddstr(pole.border_y_max+3,pole.border_x_min+7,str_BUF1);		
