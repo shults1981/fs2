@@ -235,7 +235,7 @@ int Game::SnakeControl(MoveDirection md)
 			move_flag=Left;
 		}
 		else 
-			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==2)))
+			if((snake.getBodyLen()>1)&&(tempPoint1._d!=2))
 				move_flag=Left;
 		break;
 
@@ -244,7 +244,7 @@ int Game::SnakeControl(MoveDirection md)
 			move_flag=Right;
 		}
 		else
-			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==1)))
+			if((snake.getBodyLen()>1)&&(tempPoint1._d!=1))
 				move_flag=Right;	
 		break;
 
@@ -252,7 +252,7 @@ int Game::SnakeControl(MoveDirection md)
 		if (snake.getBodyLen()==1)
 			move_flag=Up;
 		else
-			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==4)))
+			if((snake.getBodyLen()>1)&&(tempPoint1._d!=4))
 				move_flag=Up;				
 		break;
 
@@ -260,7 +260,7 @@ int Game::SnakeControl(MoveDirection md)
 		if (snake.getBodyLen()==1)
 			move_flag=Down;	
 		else
-			if((snake.getBodyLen()>1)&&(!(tempPoint1._d==3)))
+			if((snake.getBodyLen()>1)&&(tempPoint1._d!=3))
 				move_flag=Down;
 		break;
 	
