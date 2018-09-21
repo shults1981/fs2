@@ -116,26 +116,12 @@ int Game::SnakeMoveToOneStep()
 
 	if (GST==game_on){
 		snake.getBodyCords(0,tempPoint1);
-//		rabbit.getBodyCords(0,tempPoint2);
-//-------------body control and manage-------------
-/*
-		if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y)){
-			snake.addNewElementInUnitBody(tempPoint2);
-			GameScore++;
-			rabbitStatus=unit_is_dead;
-			RabbitFactory();	
-		}
-*/
-//-------------------------------------------------
-		//std::cout<<move_flag<<std::endl;
 		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
-			//--------------------------------------------------
 			if((snake.getBodyLen()>1)  && (snake.getBodyTPANum()<(snake.getBodyLen()))  )
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
-			
 	
 		//snake.getBodyCords(0,tempPoint1);
 		for (i=0;i<snake.getBodyLen();i++){
@@ -148,16 +134,16 @@ int Game::SnakeMoveToOneStep()
 						switch(tempPoint3._d)
 						{
 						case 1:
-							tempPoint2._x--;
+							tempPoint2._x-=1;
 							break;
 						case 2:
-							tempPoint2._x++;
+							tempPoint2._x+=1;
 							break;
 						case 3:
-							tempPoint2._y--;
+							tempPoint2._y-=1;
 							break;
 						case 4:
-							tempPoint2._y++;
+							tempPoint2._y+=1;
 							break;
 						default:break;
 						}
@@ -173,16 +159,16 @@ int Game::SnakeMoveToOneStep()
 				switch(tempPoint2._d)
 				{
 				case 1:
-					tempPoint2._x--;
+					tempPoint2._x-=1;
 					break;
 				case 2:
-					tempPoint2._x++;
+					tempPoint2._x+=1;
 					break;
 				case 3:
-					tempPoint2._y--;
+					tempPoint2._y-=1;
 					break;
 				case 4:
-					tempPoint2._y++;
+					tempPoint2._y+=1;
 					break;
 				default:
 					break;
@@ -196,7 +182,7 @@ int Game::SnakeMoveToOneStep()
 		rabbit.getBodyCords(0,tempPoint2);
 		if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y)){
 			snake.addNewElementInUnitBody(tempPoint2);
-			GameScore++;
+			GameScore+=1;
 			rabbitStatus=unit_is_dead;
 			RabbitFactory();	
 		}
@@ -211,8 +197,6 @@ int Game::SnakeMoveToOneStep()
 				kill_self=1;			
 		}
 			
-
-
 		if (border_crash /*||kill_self*/ ) {
 			GST=game_over;
 			snakeStatus=unit_is_dead;
@@ -269,6 +253,7 @@ int Game::SnakeControl(MoveDirection md)
 
 	}
 	return 1;
+
 }
 
 

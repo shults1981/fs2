@@ -123,7 +123,7 @@ int PointArr::addElementInBack(const Point &PointSRC)
 	Point *tVar1,*tVar2;
 
 	//if (arrLen)
-		arrLen++;
+		arrLen+=1;
 	//else 
 	//	arrLen=+2;
 
@@ -158,7 +158,7 @@ int PointArr::addElementInBack(const Point &PointSRC)
 int PointArr::delElementFromBack()
 {
 	Point *tVar1, *tVar2;
-	arrLen--;
+	arrLen-=1;
 		
 	if(arrLen!=0){
 		tVar1=new Point[arrLen];
@@ -187,7 +187,7 @@ int PointArr::delElementFromBack()
 int PointArr::addElementInBegin(const Point &PointSRC)
 {
 	Point *tVar1,*tVar2;
-	arrLen++;
+	arrLen+=1;
 	tVar1=new Point[arrLen];
 	if (tVar1){
 		if (pArr!=NULL){
@@ -219,7 +219,7 @@ int PointArr::addElementInBegin(const Point &PointSRC)
 int PointArr::delElementFromBegin()
 {
 	Point *tVar1, *tVar2;
-	arrLen--;
+	arrLen-=1;
 		
 	if(arrLen!=0){
 		tVar1=new Point[arrLen];
@@ -283,7 +283,7 @@ int PointArr::delElement(int index)
 				}
 				tVar2=pArr;
 				pArr=tVar1;
-				arrLen--;
+				arrLen-=1;
 				delete []tVar2;
 			}
 			else 
@@ -325,7 +325,7 @@ int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
 				}
 				tVar2=pArr;
 				pArr=tVar1;
-				arrLen++;
+				arrLen+=1;
 				delete []tVar2;
 
 				return 1;
@@ -466,18 +466,18 @@ int Snake::addNewElementInUnitBody(const Point &PointSRC)
 			switch(bufVar._d){
 			case 1:	
 				//
-				bufVar._x++;
+				bufVar._x+=1;
 				break;
 			case 2:
-				bufVar._x--;
+				bufVar._x-=1;
 				break;
 		
 			case 3:
-				bufVar._y++;
+				bufVar._y+=1;
 				break;
 			
 			case 4:	
-				bufVar._y--;
+				bufVar._y-=1;
 				break;
 			
 			default: break;
