@@ -110,7 +110,7 @@ int  Game::getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST)
 
 int Game::SnakeMoveToOneStep()
 {
-	int i,j,turn_flag;
+	int i,j,k,turn_flag;
 	unsigned int kill_self=0,border_crash=0;
 	Point tempPoint1,tempPoint2,tempPoint3;
 
@@ -119,16 +119,31 @@ int Game::SnakeMoveToOneStep()
 		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
-			if((snake.getBodyLen()>1)  && (snake.getBodyTPANum()<(snake.getBodyLen()))  )
+			if((snake.getBodyLen()>1) /* && (snake.getBodyTPANum()<(snake.getBodyLen()))*/  )
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
-	
+		else{
+			for (i=snake.getBodyTPANum()-1; i>=0;i--)
+				snake.getBodyTPA(i,tempPoint2);
+				if ((tempPoint1._x==tempPoint2._x) && (tempPoint1._y==tempPoint2._y))
+					snake.addNewElementInBodyTPA(tempPoint1);
+
+		}
+
+
+
+			
 		//snake.getBodyCords(0,tempPoint1);
+		if (k=snake.getBodyTPANum())
+			k-=1;
+
 		for (i=0;i<snake.getBodyLen();i++){
 			turn_flag=0;
 			snake.getBodyCords(i,tempPoint2);
 			if(snake.getBodyTPANum()){
-				for(j=snake.getBodyTPANum()-1;j>=0;j--){
+				//for(j=snake.getBodyTPANum()-1;j>=0;j--){
+				j=k;
+				while ((j>=0) && (!turn_flag)) {
 					snake.getBodyTPA(j,tempPoint3);
 					if((tempPoint2._x==tempPoint3._x) && (tempPoint2._y==tempPoint3._y)){
 						switch(tempPoint3._d)
@@ -149,10 +164,13 @@ int Game::SnakeMoveToOneStep()
 						}
 						tempPoint2._d=tempPoint3._d;
 						//snake.setBodyElement(i,tempPoint2);
-						if((i==snake.getBodyLen()-1) && (j==0))
+						if((i==snake.getBodyLen()-1) && (j==0)){
 							snake.delElementFromBodyTPA();
+						}
 						turn_flag=1;
+						k-=1;
 					}
+					j-=1;
 				}		
 			}
 			if (!turn_flag){
