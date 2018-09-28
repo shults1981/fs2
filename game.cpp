@@ -108,7 +108,7 @@ int  Game::getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST)
 }
 
 
-int Game::SnakeMoveToOneStep()
+int Game::SnakeMoveToOneStep(int kill_self_flag)
 {
 	int i,j,k,turn_flag,self_closure_flag;
 	unsigned int kill_self=0,border_crash=0;
@@ -119,7 +119,7 @@ int Game::SnakeMoveToOneStep()
 		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
-			if((snake.getBodyLen()>1) /* && (snake.getBodyTPANum()<(snake.getBodyLen()))*/  )
+			if((snake.getBodyLen()>1) /* && (snake.getBodyTPANum()<(snake.getBodyLen()))*/ )//!!!!!!------
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
 		else{
@@ -135,10 +135,6 @@ int Game::SnakeMoveToOneStep()
 			}
 		}
 
-
-
-			
-		//snake.getBodyCords(0,tempPoint1);
 		if (k=snake.getBodyTPANum())
 			k-=1;
 
@@ -146,7 +142,6 @@ int Game::SnakeMoveToOneStep()
 			turn_flag=0;
 			snake.getBodyCords(i,tempPoint2);
 			if(snake.getBodyTPANum()){
-				//for(j=snake.getBodyTPANum()-1;j>=0;j--){
 				j=k;
 				while ((j>=0) && (!turn_flag)) {
 					snake.getBodyTPA(j,tempPoint3);
@@ -168,7 +163,6 @@ int Game::SnakeMoveToOneStep()
 						default:break;
 						}
 						tempPoint2._d=tempPoint3._d;
-						//snake.setBodyElement(i,tempPoint2);
 						if((i==snake.getBodyLen()-1) && (j==0)){
 							snake.delElementFromBodyTPA();
 						}
@@ -196,7 +190,6 @@ int Game::SnakeMoveToOneStep()
 				default:
 					break;
 				}
-		//		snake.setBodyElement(i,tempPoint2);
 			}
 			snake.setBodyElement(i,tempPoint2);
 		}
@@ -214,17 +207,21 @@ int Game::SnakeMoveToOneStep()
 		snake.getBodyCords(0,tempPoint1);
 		border_crash=!((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&(tempPoint1._y<GameFild.border_y_max));		
 
-		for (i=1;i<snake.getBodyLen();i++){
-			snake.getBodyCords(i,tempPoint2);
-			if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y))
-				kill_self=1;			
+		if (kill_self_flag){
+			for (i=1;i<snake.getBodyLen();i++){
+				snake.getBodyCords(i,tempPoint2);
+				if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y))
+					kill_self=1;			
+			}
 		}
 			
-		if (border_crash /*||kill_self*/ ) {
+		if (border_crash || kill_self ) {
 			GST=game_over;
 			snakeStatus=unit_is_dead;
 		}
 		else {	}
+		
+	
 	}
 	return 1;
 }

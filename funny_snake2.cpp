@@ -70,20 +70,26 @@ WINDOW *MainMenu, *tuneMenu;
 Fild gameFild;
 
 
-ofstream fout;//**********************-------------------
+//ofstream fout;//**********************-------------------
 
 //============================= MAIN ======================================
 		
 int main (int argc, char** argv)
 {	
 	
-	fout.open("fs2.log");//**************-------------------
+//	fout.open("fs2.log");//**************-------------------
 	
-	struct itimerval tmr1;
+	struct itimerval tmr1,tmr2;
 	tmr1.it_value.tv_sec=0;
 	tmr1.it_value.tv_usec=200000;
 	tmr1.it_interval.tv_sec=0;
 	tmr1.it_interval.tv_usec=200000;
+
+	tmr2.it_value.tv_sec=0;
+	tmr2.it_value.tv_usec=100000;
+	tmr2.it_interval.tv_sec=0;
+	tmr2.it_interval.tv_usec=100000;
+
 
 	signal(SIGALRM,GTI);// registring game timer
 
@@ -151,7 +157,16 @@ int main (int argc, char** argv)
 			
 			}		
 		}	
-				
+		
+		if (GameController->getGameStatus()==game_new_level){
+			GameController->setGameStatus(game_over);
+			CreateGameFild();
+
+			setitimer(ITIMER_REAL,&tmr2,NULL); // start game ciclic timer
+							
+			GameController->setGameStatus(game_new);
+			GameController->setGameStatus(game_on);
+		}
 				
 		if (GameController->getGameStatus()==game_on)
 		{
@@ -185,11 +200,14 @@ int main (int argc, char** argv)
 			}
 
 			if (ImpulsFront){
-			
+				
+				if (GameController->getGameScore() > 10)
+					GameController->setGameStatus(game_new_level);		
+				
 				render(GameController,0);
 	
 				GameController->SnakeControl(mvf);
-				GameController->SnakeMoveToOneStep();
+				GameController->SnakeMoveToOneStep(0);
 
 				render(GameController,1);
 
@@ -202,7 +220,7 @@ int main (int argc, char** argv)
 	delete GameController;
 	destr_scr();//-----------delete screen -------------
 	
-	fout.close();
+//	fout.close();
 
 	return 0;
 }	
@@ -288,20 +306,14 @@ void render(Game *GameCntrl,int FrameFlag)
 	Point pen;
 	Fild pole;
 
-/*
-	sprintf(str_BUF3,"%d",ImpulsFront);
-	mvaddstr(gameFild.border_y_max/2,gameFild.border_x_min/2-5,str_BUF3);
-*/
-
-
 	pole=GameCntrl->getGameFild();
 		
 	if (GameCntrl->getGameStatus()==game_on){
 		GameCntrl->getRabbitPlace(pen);
 		mvaddch(pen._y,pen._x,'*');
 
-		if ((GameCntrl->getSnakeLen()>3)&&(FrameFlag))//***************--------------------------
-			fout<<"Tic"<<GameImpuls<<"=========="<<std::endl;//*******************----------------------
+		//if ((GameCntrl->getSnakeLen()>3)&&(FrameFlag))//***************--------------------------
+		//	fout<<"Tic"<<GameImpuls<<"=========="<<std::endl;//*******************----------------------
 
 		for (int i=0;i<GameCntrl->getSnakeLen();i++){
 
@@ -309,8 +321,8 @@ void render(Game *GameCntrl,int FrameFlag)
 			        if (FrameFlag){
 					mvaddch(pen._y,pen._x,'@');
 	
-					if (GameCntrl->getSnakeLen()>3)//**************-----------------------
-						fout<<"x-"<<pen._x<<"  y-"<<pen._y<<std::endl;//*************-------------------
+					//if (GameCntrl->getSnakeLen()>3)//**************-----------------------
+						//fout<<"x-"<<pen._x<<"  y-"<<pen._y<<std::endl;//*************-------------------
 				}	
 				else
 					mvaddch(pen._y,pen._x,' ');
@@ -324,12 +336,13 @@ void render(Game *GameCntrl,int FrameFlag)
 			mvaddstr(pole.border_y_max+4,pole.border_x_min,"Level-");			
 			mvaddstr(pole.border_y_max+4,pole.border_x_min+7,str_BUF2);			
 		//-----------------------------debug output ------------------------------	
-			sprintf(str_BUF1,"%d",GameCntrl->getSnakeLen());
+		/*	sprintf(str_BUF1,"%d",GameCntrl->getSnakeLen());
 			mvaddstr(pole.border_y_max+3,pole.border_x_min+20,"Sn Len-");			
 			mvaddstr(pole.border_y_max+3,pole.border_x_min+27,str_BUF1);		
 			sprintf(str_BUF2,"%d",GameCntrl->DBG_f1());
 			mvaddstr(pole.border_y_max+4,pole.border_x_min+20,"Sn TPA Len-");			
 			mvaddstr(pole.border_y_max+4,pole.border_x_min+32,str_BUF2);			
+			*/
 
 	}
 

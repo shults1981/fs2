@@ -17,7 +17,7 @@
 
 
 
-typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new} GameStatus;
+typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new,game_new_level} GameStatus;
 typedef enum _unit_status{unit_is_dead=0,unit_is_alive} UnitStatus;
 typedef enum _move_direction{Left=1,Right,Up,Down} MoveDirection;
 typedef enum _level{easy=0,midle,hi,master} Level;
@@ -63,7 +63,7 @@ public:
 	int getRabbitPlace(Point &PointDEST);
 	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
 	int SnakeControl(MoveDirection md);
-	int SnakeMoveToOneStep();
+	int SnakeMoveToOneStep(int kill_self_flag);//0- without self kill contorl; 1-with self kill control
 	Fild getGameFild();
 	int GameOver();
 	int getGameScore();
