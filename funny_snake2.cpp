@@ -68,6 +68,7 @@ int Watchdog=0;
 WINDOW *MainMenu, *tuneMenu;
 
 Fild gameFild;
+int NumNextLevelJump=6;
 
 
 //ofstream fout;//**********************-------------------
@@ -79,16 +80,16 @@ int main (int argc, char** argv)
 	
 //	fout.open("fs2.log");//**************-------------------
 	
-	struct itimerval tmr1,tmr2;
+	struct itimerval tmr1; //,tmr2;
 	tmr1.it_value.tv_sec=0;
 	tmr1.it_value.tv_usec=200000;
 	tmr1.it_interval.tv_sec=0;
 	tmr1.it_interval.tv_usec=200000;
 
-	tmr2.it_value.tv_sec=0;
-	tmr2.it_value.tv_usec=100000;
-	tmr2.it_interval.tv_sec=0;
-	tmr2.it_interval.tv_usec=100000;
+//	tmr2.it_value.tv_sec=0;
+//	tmr2.it_value.tv_usec=100000;
+//	tmr2.it_interval.tv_sec=0;
+//	tmr2.it_interval.tv_usec=100000;
 
 
 	signal(SIGALRM,GTI);// registring game timer
@@ -142,10 +143,10 @@ int main (int argc, char** argv)
 				GameController->setGameStatus(game_new);
 				GameController->setGameStatus(game_on);
 				break;
-			case '1'...'9':
-				buf1[0]=ch;
-				level=atoi(buf1);
-				break;
+//			case '1'...'9':
+//				buf1[0]=ch;
+//				level=atoi(buf1);
+//				break;
 			case 'c':
 				if(GameController->getGameStatus()!=game_over)
 				{
@@ -162,7 +163,12 @@ int main (int argc, char** argv)
 			GameController->setGameStatus(game_over);
 			CreateGameFild();
 
-			setitimer(ITIMER_REAL,&tmr2,NULL); // start game ciclic timer
+			tmr1.it_value.tv_sec=0;
+			tmr1.it_value.tv_usec=200000-GameController->getGameLevel()*10000;
+			tmr1.it_interval.tv_sec=0;
+			tmr1.it_interval.tv_usec=200000-GameController->getGameLevel()*10000;
+
+			setitimer(ITIMER_REAL,&tmr1,NULL); // start game ciclic timer
 							
 			GameController->setGameStatus(game_new);
 			GameController->setGameStatus(game_on);
@@ -201,8 +207,7 @@ int main (int argc, char** argv)
 
 			if (ImpulsFront){
 				
-				if (GameController->getGameScore() > 10)
-					GameController->setGameStatus(game_new_level);		
+		
 				
 				render(GameController,0);
 	
@@ -211,7 +216,8 @@ int main (int argc, char** argv)
 
 				render(GameController,1);
 
-				//-----ImpulsFront=0;
+				if (GameController->getGameScore() > NumNextLevelJump)
+					GameController->setGameStatus(game_new_level);
 			}
 
 		}
@@ -277,19 +283,19 @@ int row, col;
 
 void gameMenuOpen()
 {
-	MainMenu=newwin(10,20,gameFild.border_y_max/2,gameFild.border_x_max/2);
+	MainMenu=newwin(10,20,gameFild.border_y_max/2-2,gameFild.border_x_max/2-5);
 	wbkgd(MainMenu,COLOR_PAIR(2));
 	wattron(MainMenu,COLOR_PAIR(2));
 	box(MainMenu,ACS_VLINE,ACS_HLINE);
-	wmove(MainMenu,0,5);
-	waddstr(MainMenu,"MENU");
-	wmove(MainMenu,2,1);
+	wmove(MainMenu,1,7);
+	waddstr(MainMenu,"MENU:");
+	wmove(MainMenu,3,1);
 	waddstr(MainMenu,"NEW GAME - 'n'");
-	wmove(MainMenu,4,1);
-	waddstr(MainMenu,"LEVEL - 1...9");
-	wmove(MainMenu,6,1);
+//	wmove(MainMenu,4,1);
+//	waddstr(MainMenu,"LEVEL - 1...9");
+	wmove(MainMenu,5,1);
 	waddstr(MainMenu,"CONTINUE - 'C'");
-	wmove(MainMenu,8,1);
+	wmove(MainMenu,7,1);
 	waddstr(MainMenu,"EXIT - 'e'");
 	wrefresh(MainMenu);
 }
@@ -330,11 +336,11 @@ void render(Game *GameCntrl,int FrameFlag)
 		}
 
 			sprintf(str_BUF1,"%d",GameCntrl->getGameScore());
-			mvaddstr(pole.border_y_max+3,pole.border_x_min,"Score-");			
-			mvaddstr(pole.border_y_max+3,pole.border_x_min+7,str_BUF1);		
+			mvaddstr(pole.border_y_max+2,pole.border_x_min,"Score-");			
+			mvaddstr(pole.border_y_max+2,pole.border_x_min+7,str_BUF1);		
 			sprintf(str_BUF2,"%d",GameCntrl->getGameLevel());
-			mvaddstr(pole.border_y_max+4,pole.border_x_min,"Level-");			
-			mvaddstr(pole.border_y_max+4,pole.border_x_min+7,str_BUF2);			
+			mvaddstr(pole.border_y_max+3,pole.border_x_min,"Level-");			
+			mvaddstr(pole.border_y_max+3,pole.border_x_min+7,str_BUF2);			
 		//-----------------------------debug output ------------------------------	
 		/*	sprintf(str_BUF1,"%d",GameCntrl->getSnakeLen());
 			mvaddstr(pole.border_y_max+3,pole.border_x_min+20,"Sn Len-");			
@@ -357,7 +363,7 @@ void render(Game *GameCntrl,int FrameFlag)
 void GTI (int signom)
 {
 	sprintf(str_BUF2,"%d",GameImpuls);
-	mvaddstr(gameFild.border_y_max+2,gameFild.border_x_min,str_BUF2);
+	mvaddstr(gameFild.border_y_max+1,gameFild.border_x_min,str_BUF2);
 	GameImpuls+=1;
 }
 

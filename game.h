@@ -39,6 +39,7 @@ class Game
 private:
 	int GameLevel;
 	int GameScore;
+	int NumNextLevelJump;
 
 	Snake snake;
 	Rabbit rabbit;
