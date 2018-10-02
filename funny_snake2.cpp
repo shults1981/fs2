@@ -68,7 +68,6 @@ int Watchdog=0;
 WINDOW *MainMenu, *tuneMenu;
 
 Fild gameFild;
-int NumNextLevelJump=6;
 
 
 //ofstream fout;//**********************-------------------
@@ -86,10 +85,6 @@ int main (int argc, char** argv)
 	tmr1.it_interval.tv_sec=0;
 	tmr1.it_interval.tv_usec=200000;
 
-//	tmr2.it_value.tv_sec=0;
-//	tmr2.it_value.tv_usec=100000;
-//	tmr2.it_interval.tv_sec=0;
-//	tmr2.it_interval.tv_usec=100000;
 
 
 	signal(SIGALRM,GTI);// registring game timer
@@ -104,7 +99,7 @@ int main (int argc, char** argv)
 	gameFild.border_y_max=row_max-2*row_max/10;
 
 	Game *GameController;
-	GameController=new Game(gameFild);
+	GameController=new Game(gameFild,6);
 
 
 	CreateGameFild();  //---------- Draw game fild ----------------------
@@ -215,9 +210,6 @@ int main (int argc, char** argv)
 				GameController->SnakeMoveToOneStep(0);
 
 				render(GameController,1);
-
-				if (GameController->getGameScore() > NumNextLevelJump)
-					GameController->setGameStatus(game_new_level);
 			}
 
 		}

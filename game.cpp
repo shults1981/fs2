@@ -14,7 +14,7 @@
 
 
 
-Game::Game(const Fild game_fild):snake(),rabbit()
+Game::Game(const Fild game_fild, int num_next_level_jump ):snake(),rabbit()
 {
 	GST=game_stop; 
 	GameFild=game_fild;
@@ -22,6 +22,7 @@ Game::Game(const Fild game_fild):snake(),rabbit()
 	snakeStatus=unit_is_dead;	
 	GameScore=0;
 	GameLevel=1;
+	NumNextLevelJump=num_next_level_jump;
 
 	srand(time(0));
 	
@@ -221,6 +222,10 @@ int Game::SnakeMoveToOneStep(int kill_self_flag)
 		}
 		else {	}
 		
+		if (GameScore>=NumNextLevelJump){
+			GST=game_new_level;
+			GameLevel++;
+		}
 	
 	}
 	return 1;
