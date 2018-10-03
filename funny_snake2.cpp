@@ -29,16 +29,9 @@
 #include "game.h"
 #include "unit.h"
 
-/*
-#define border_x_min (col_max-9*col_max/10)
-#define border_x_max (col_max-2*col_max/10)
-#define border_y_min (row_max-9*row_max/10)
-#define border_y_max (row_max-2*row_max/10)
-*/
 
 using namespace std;
 
-//typedef enum _Game_status {game_exit=0, game_menu, game_on, game_over} GameStatus;
 
 
 void init_scr();
@@ -55,7 +48,6 @@ static int row,col;
 static int row_max,col_max;
 static int ch;
 static MoveDirection mvf;
-//static int GST;
 static char str_BUF1[5],str_BUF2[5],str_BUF3[5];
 char buf1[2]={'0',0x00};
 int level;
@@ -78,7 +70,8 @@ int main (int argc, char** argv)
 {	
 	
 //	fout.open("fs2.log");//**************-------------------
-	
+		
+	int PRG=1;
 	struct itimerval tmr1; //,tmr2;
 	tmr1.it_value.tv_sec=0;
 	tmr1.it_value.tv_usec=200000;
@@ -108,17 +101,16 @@ int main (int argc, char** argv)
 
 	//--------------------- main cicle---------------		
 
-	while (ch!='q')
+	while (PRG)
 	{
 		ch=wgetch(stdscr);
-		
+	
+	
 		if (ch=='m')
 		{
 			GameController->setGameStatus(game_stop);
 			ImpulsFront=0;
-
 		}
-
 
 		if (GameController->getGameStatus()==game_stop)
 		{
@@ -129,7 +121,8 @@ int main (int argc, char** argv)
 			case 'e':
 				GameController->setGameStatus(game_exit);
 				gameMenuClose();
-				ch='q';
+				//ch='q';
+				PRG=0;
 				break;
 			case 'n':
 				GameController->setGameStatus(game_over);
@@ -138,10 +131,6 @@ int main (int argc, char** argv)
 				GameController->setGameStatus(game_new);
 				GameController->setGameStatus(game_on);
 				break;
-//			case '1'...'9':
-//				buf1[0]=ch;
-//				level=atoi(buf1);
-//				break;
 			case 'c':
 				if(GameController->getGameStatus()!=game_over)
 				{
@@ -171,7 +160,6 @@ int main (int argc, char** argv)
 				
 		if (GameController->getGameStatus()==game_on)
 		{
-		
 			if (GameImpuls!=Watchdog){
 				ImpulsFront=1;
 				Watchdog=GameImpuls;
@@ -179,8 +167,6 @@ int main (int argc, char** argv)
 			else {
 				ImpulsFront=0;
 			}
-
-
 
 			switch(ch)
 			{
@@ -201,8 +187,6 @@ int main (int argc, char** argv)
 			}
 
 			if (ImpulsFront){
-				
-		
 				
 				render(GameController,0);
 	
@@ -283,8 +267,6 @@ void gameMenuOpen()
 	waddstr(MainMenu,"MENU:");
 	wmove(MainMenu,3,1);
 	waddstr(MainMenu,"NEW GAME - 'n'");
-//	wmove(MainMenu,4,1);
-//	waddstr(MainMenu,"LEVEL - 1...9");
 	wmove(MainMenu,5,1);
 	waddstr(MainMenu,"CONTINUE - 'C'");
 	wmove(MainMenu,7,1);
@@ -310,8 +292,6 @@ void render(Game *GameCntrl,int FrameFlag)
 		GameCntrl->getRabbitPlace(pen);
 		mvaddch(pen._y,pen._x,'*');
 
-		//if ((GameCntrl->getSnakeLen()>3)&&(FrameFlag))//***************--------------------------
-		//	fout<<"Tic"<<GameImpuls<<"=========="<<std::endl;//*******************----------------------
 
 		for (int i=0;i<GameCntrl->getSnakeLen();i++){
 
@@ -319,8 +299,6 @@ void render(Game *GameCntrl,int FrameFlag)
 			        if (FrameFlag){
 					mvaddch(pen._y,pen._x,'@');
 	
-					//if (GameCntrl->getSnakeLen()>3)//**************-----------------------
-						//fout<<"x-"<<pen._x<<"  y-"<<pen._y<<std::endl;//*************-------------------
 				}	
 				else
 					mvaddch(pen._y,pen._x,' ');

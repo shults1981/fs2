@@ -10,7 +10,6 @@
 #include <time.h>
 
 #include <iostream>
-#include <fstream>
 
 
 
@@ -34,7 +33,7 @@ Game::~Game() { }
 
 int Game::newGameUnitsSet()
 {
-	if((GST==game_new)){
+//	if((GST==game_new)){
 		Point bufVar;
 		bufVar._x=(GameFild.border_x_max-GameFild.border_x_min)/2;
 		bufVar._y=(GameFild.border_y_max-GameFild.border_y_min)/2;
@@ -45,26 +44,34 @@ int Game::newGameUnitsSet()
 		RabbitFactory();
 		GameScore=0;
 		return 1;
-	}
-	else
-		return 0;
+//	}
+//	else
+//		return 0;
 }
+
 int Game::setGameStatus(GameStatus gst)
 {
-	GST=gst;
 
-	if ((GST==game_over)||(GST==game_exit))
+//	GST=gst;
+
+	if ((gst==game_over)||(gst==game_exit))
 		GameOver();
 
-	if (GST==game_new){
+	if ((gst==game_new) && (GST==game_over)){
 		GameOver();   ///?????????????????????????????????????????
 		newGameUnitsSet();
-		SnakeControl(static_cast<MoveDirection>(rand()%4+1));//rand()%4+1
+		SnakeControl(static_cast<MoveDirection>(rand()%4+1));
 	}
+
+	if (gst==game_new_level)
+		gst=GST;
+
+	//if ((gst))
+
+	GST=gst;
+
 	return 1;
  }
-
-
 
 GameStatus Game::getGameStatus(){ return GST; }
 
@@ -310,10 +317,10 @@ int Game::getGameLevel()
 	return GameLevel;
 }
 
-int Game::DBG_f1()
-{
-	return snake.getBodyTPANum();
-}
+//int Game::DBG_f1()
+//{
+//	return snake.getBodyTPANum();
+//}
 
 
 

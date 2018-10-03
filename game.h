@@ -19,7 +19,6 @@
 typedef enum _game_status{game_exit=0,game_stop,game_on,game_over,game_new,game_new_level} GameStatus;
 typedef enum _unit_status{unit_is_dead=0,unit_is_alive} UnitStatus;
 typedef enum _move_direction{Left=1,Right,Up,Down} MoveDirection;
-//typedef enum _level{easy=0,midle,hi,master} Level;
 
 
 struct Fild
@@ -47,27 +46,31 @@ private:
 		
 	Game();
 
+private:
+	int newGameUnitsSet();
+	void RabbitFactory();
+	int GameOver();
+
+
 
 public:
 
 	Game(const Fild gamefild,int num_next_level_jump);
 	~Game();	
-	int newGameUnitsSet();
 	int setGameStatus(GameStatus gst);
 	GameStatus getGameStatus();	
 	int getSnakeLen();
 	int getRabbitLen();
-	void RabbitFactory();
 	int getRabbitPlace(Point &PointDEST);
 	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
 	int SnakeControl(MoveDirection md);
 	int SnakeMoveToOneStep(int kill_self_flag);//0- without self kill contorl; 1-with self kill control
 	Fild getGameFild();
-	int GameOver();
 	int getGameScore();
 	int getGameLevel();
 
-	int DBG_f1();
+
+	//int DBG_f1();
 };
 
 

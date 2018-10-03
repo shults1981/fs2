@@ -27,7 +27,6 @@ private:
 
 public:
 	
-	//PointArr();
 	PointArr(int Len);
 	PointArr(const PointArr &PointSRC);
 	~PointArr();
@@ -105,7 +104,6 @@ public:
 	Snake();
 	~Snake();
 	int addNewElementInUnitBody(const Point &PointSRC);
-	//int setBodyElement(int BodyIndex, const Point &PointSRC);
 	int delElementFromBeginOfUnitBody ();
 };
 

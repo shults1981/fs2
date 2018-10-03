@@ -13,7 +13,6 @@
 
 PointArr::PointArr()
 {
-//std::cout<<".....class PoinArr costructor_1..... "<<std::endl;
 
 	arrLen=1;
 	pArr=new Point;
@@ -26,7 +25,6 @@ PointArr::PointArr()
 
 PointArr::PointArr(int Len)
 {
-//std::cout<<".....class PoinArr costructor_2..... "<<std::endl;
 
 	if (Len==0){
 		arrLen=0;
@@ -98,7 +96,6 @@ PointArr & PointArr::operator= (const PointArr & PointSRC)
 
 PointArr::~PointArr()
 {
-//std::cout<<"............class PointArr destructor.........."<<std::endl;
 
 	if (pArr)
 		delete []pArr;
@@ -122,10 +119,7 @@ int PointArr::addElementInBack(const Point &PointSRC)
 {
 	Point *tVar1,*tVar2;
 
-	//if (arrLen)
-		arrLen+=1;
-	//else 
-	//	arrLen=+2;
+	arrLen+=1;
 
 	tVar1=new Point[arrLen];
 	if (tVar1){
@@ -347,7 +341,6 @@ int PointArr::insertElementAfterIndex(int index, Point &PointSRC)
 
 Unit::Unit(int UnitLen)
 {
-//std::cout<<" constructor of class Unit!!!!!"<<std::endl;
 
 	BodyCords = new PointArr(UnitLen);
 	BodyTPA= new PointArr(0);
@@ -356,7 +349,6 @@ Unit::Unit(int UnitLen)
 
 Unit::~Unit()
 {
-//std::cout<<" destructor of class Unit"<<std::endl;
 
 	delete BodyCords;
 	delete BodyTPA;
@@ -420,20 +412,14 @@ int Unit::ClearBodyAndTPA()
 	tempVar._y=0;
 	tempVar._d=0;
 	if ((k=BodyCords->getLen())>1){
-	//	for(int i=0;i<BodyCords->getLen();i++)
 		for(int i=0;i<k-1;i++)
 			BodyCords->delElementFromBack();
-	//		std::cout<<"_________________o_O__"<<std::endl;//----
 	}
 	if ((k=BodyTPA->getLen())>0){
-		//for (int i=0;i<BodyTPA->getLen();i++)
 		for (int i=0;i<k;i++)
 			BodyTPA->delElementFromBack();
-	//		std::cout<<"__a_A__"<<std::endl;//----
 	}
 	BodyCords->setElement(tempVar,0);
-	//BodyTPA->setElement(tempVar,0);
-
 	return 1;
 			
 }
@@ -482,12 +468,10 @@ int Snake::addNewElementInUnitBody(const Point &PointSRC)
 			
 			default: break;
 			}
-			//std::cout<<"adding --"<<bufVar._x<<"--"<<bufVar._y<<"--"<<bufVar._d<<std::endl;//---------------------
 			return BodyCords->addElementInBack(bufVar);
 		}
 	}
 }
-//int Snake::setBodyElement(int BodyIndex,const Point &PointSRC)  { return 0;}
 int Snake::delElementFromBeginOfUnitBody()  { return 0;}
 
 //-----------------------------------------------------------------------
@@ -495,10 +479,7 @@ int Snake::delElementFromBeginOfUnitBody()  { return 0;}
 
 //-------- methods of class Rabbit---------------------------------
 
-Rabbit::Rabbit(/*const Point &PointSRC*/):Unit(1) 
-{
-	//BodyCords->setElement(PointSRC,0);
-}
+Rabbit::Rabbit():Unit(1){   }
 
 Rabbit::~Rabbit() { }
 
