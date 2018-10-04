@@ -126,7 +126,7 @@ int main (int argc, char** argv)
 				PRG=0;
 				break;
 			case 'n':
-				GameController->setGameStatus(game_stop);
+//				GameController->setGameStatus(game_stop);
 				GameController->setGameStatus(game_over);
 				gameMenuClose();
 				CreateGameFild();				
