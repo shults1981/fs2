@@ -33,7 +33,7 @@ Game::~Game() { }
 
 int Game::newGameUnitsSet()
 {
-//	if((GST==game_new)){
+	if((GST==game_new)){
 		Point bufVar;
 		bufVar._x=(GameFild.border_x_max-GameFild.border_x_min)/2;
 		bufVar._y=(GameFild.border_y_max-GameFild.border_y_min)/2;
@@ -44,31 +44,47 @@ int Game::newGameUnitsSet()
 		RabbitFactory();
 		GameScore=0;
 		return 1;
-//	}
-//	else
-//		return 0;
+	}
+	else
+		return 0;
 }
 
 int Game::setGameStatus(GameStatus gst)
 {
 
-//	GST=gst;
-
-	if ((gst==game_over)||(gst==game_exit))
+	if ((gst==game_exit) && (GST==game_over)){
 		GameOver();
+		GST=game_exit;
+	}
+
+	if ((gst==game_over) && (GST==game_stop))	{
+		GST=game_over;
+		GameOver();
+	}
 
 	if ((gst==game_new) && (GST==game_over)){
-		GameOver();   ///?????????????????????????????????????????
+//		GameOver();   ///?????????????????????????????????????????
+		GST=game_new;
 		newGameUnitsSet();
 		SnakeControl(static_cast<MoveDirection>(rand()%4+1));
 	}
 
-	if (gst==game_new_level)
+	if ((gst==game_stop) && ((GST==game_on)||(GST==game_new_level))){
+		GST=game_stop;
+	}
+
+	if (gst==game_new_level){
 		gst=GST;
+	}
 
-	//if ((gst))
+	if((gst==game_on) && ((GST==game_new)||(GST==game_stop))){
+		GST=game_on;
+	}
+	
+	
 
-	GST=gst;
+
+//	GST=gst;
 
 	return 1;
  }
@@ -223,17 +239,16 @@ int Game::SnakeMoveToOneStep(int kill_self_flag)
 			}
 		}
 			
+		if (GameScore>=NumNextLevelJump){
+			GST=game_new_level;
+			GameLevel++;
+		}
+
 		if (border_crash || kill_self ) {
 			GST=game_over;
 			snakeStatus=unit_is_dead;
 		}
 		else {	}
-		
-		if (GameScore>=NumNextLevelJump){
-			GST=game_new_level;
-			GameLevel++;
-		}
-	
 	}
 	return 1;
 }

@@ -112,19 +112,21 @@ int main (int argc, char** argv)
 			ImpulsFront=0;
 		}
 
-		if (GameController->getGameStatus()==game_stop)
+		if ((GameController->getGameStatus()==game_stop) || (GameController->getGameStatus()==game_over))
 		{
 			if (!MainMenu)
 				gameMenuOpen();
 			switch (ch)
 			{
 			case 'e':
+				GameController->setGameStatus(game_over);
 				GameController->setGameStatus(game_exit);
 				gameMenuClose();
 				//ch='q';
 				PRG=0;
 				break;
 			case 'n':
+				GameController->setGameStatus(game_stop);
 				GameController->setGameStatus(game_over);
 				gameMenuClose();
 				CreateGameFild();				
@@ -144,6 +146,7 @@ int main (int argc, char** argv)
 		}	
 		
 		if (GameController->getGameStatus()==game_new_level){
+			GameController->setGameStatus(game_stop);
 			GameController->setGameStatus(game_over);
 			CreateGameFild();
 
