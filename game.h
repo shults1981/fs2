@@ -36,7 +36,7 @@ private:
 	int GameLevel;
 	int GameScore;
 	int NumNextLevelJump;
-
+	int Kill_Self_Flag;//0- without self kill contorl; 1-with self kill control
 	Snake snake;
 	Rabbit rabbit;
 	GameStatus GST;	
@@ -49,13 +49,12 @@ private:
 private:
 	int newGameUnitsSet();
 	void RabbitFactory();
-	int GameOver();
-
+	int ResetUnits();
 
 
 public:
 
-	Game(const Fild gamefild,int num_next_level_jump);
+	Game(const Fild gamefild,int num_next_level_jump,int kill_self_flag);
 	~Game();	
 	int setGameStatus(GameStatus gst);
 	GameStatus getGameStatus();	
@@ -64,7 +63,7 @@ public:
 	int getRabbitPlace(Point &PointDEST);
 	int getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST);
 	int SnakeControl(MoveDirection md);
-	int SnakeMoveToOneStep(int kill_self_flag);//0- without self kill contorl; 1-with self kill control
+	int SnakeMoveToOneStep();
 	Fild getGameFild();
 	int getGameScore();
 	int getGameLevel();

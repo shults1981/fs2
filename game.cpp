@@ -13,10 +13,11 @@
 
 
 
-Game::Game(const Fild game_fild, int num_next_level_jump ):snake(),rabbit()
+Game::Game(const Fild game_fild, int num_next_level_jump, int kill_self_flag ):snake(),rabbit()
 {
 	GST=game_stop; 
 	GameFild=game_fild;
+	Kill_Self_Flag=kill_self_flag;
 	rabbitStatus=unit_is_dead;
 	snakeStatus=unit_is_dead;	
 	GameScore=0;
@@ -37,8 +38,12 @@ int Game::newGameUnitsSet()
 		Point bufVar;
 		bufVar._x=(GameFild.border_x_max-GameFild.border_x_min)/2;
 		bufVar._y=(GameFild.border_y_max-GameFild.border_y_min)/2;
-		bufVar._d=1;
+		bufVar._d=rand()%4+1;
+		move_flag=static_cast<MoveDirection>(bufVar._d);
 		snake.addNewElementInUnitBody(bufVar);		
+		if (snakeStatus==unit_is_dead){
+			GameLevel=1;
+		}
 		snakeStatus=unit_is_alive;
 		rabbitStatus=unit_is_dead;
 		RabbitFactory();
@@ -54,21 +59,20 @@ int Game::setGameStatus(GameStatus gst)
 
 	if ((gst==game_exit) && (GST==game_over)){
 		GST=game_over;
-		GameOver();
+		ResetUnits();
 		GST=game_exit;
 	}
 
 	if ((gst==game_over) && (GST==game_stop))	{
 		GST=game_over;
-		GameOver();
+		ResetUnits();
 	}
 
 	if ((gst==game_new) && ((GST==game_over)||(GST==game_stop))){
 		GST=game_over;
-		GameOver();   ///?????????????????????????????????????????
+		ResetUnits();
 		GST=game_new;
 		newGameUnitsSet();
-		SnakeControl(static_cast<MoveDirection>(rand()%4+1));
 	}
 
 	if ((gst==game_stop) && ((GST==game_on)||(GST==game_new_level))){
@@ -83,11 +87,6 @@ int Game::setGameStatus(GameStatus gst)
 		GST=game_on;
 	}
 	
-	
-
-
-//	GST=gst;
-
 	return 1;
  }
 
@@ -134,7 +133,7 @@ int  Game::getSnakeBodyPartsCords(int BodyPartIndex, Point &PointDEST)
 }
 
 
-int Game::SnakeMoveToOneStep(int kill_self_flag)
+int Game::SnakeMoveToOneStep()
 {
 	int i,j,k,turn_flag,self_closure_flag;
 	unsigned int kill_self=0,border_crash=0;
@@ -145,7 +144,7 @@ int Game::SnakeMoveToOneStep(int kill_self_flag)
 		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=(int)move_flag;
 			snake.setBodyElement(0,tempPoint1);
-			if((snake.getBodyLen()>1) /* && (snake.getBodyTPANum()<(snake.getBodyLen()))*/ )//!!!!!!------
+			if((snake.getBodyLen()>1) /* && (snake.getBodyTPANum()<(snake.getBodyLen()))*/ )
 				snake.addNewElementInBodyTPA(tempPoint1);
 		}
 		else{
@@ -233,7 +232,7 @@ int Game::SnakeMoveToOneStep(int kill_self_flag)
 		snake.getBodyCords(0,tempPoint1);
 		border_crash=!((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&(tempPoint1._y<GameFild.border_y_max));		
 
-		if (kill_self_flag){
+		if (Kill_Self_Flag){
 			for (i=1;i<snake.getBodyLen();i++){
 				snake.getBodyCords(i,tempPoint2);
 				if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y))
@@ -312,7 +311,7 @@ Fild Game::getGameFild()
 }
 
 
-int Game::GameOver()
+int Game::ResetUnits()
 {
 
 	if (GST==game_over){

@@ -19,7 +19,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include <fstream>
-
+#include <unistd.h>
 
 #include <signal.h>
 #include <sys/time.h>
@@ -73,31 +73,21 @@ int main (int argc, char** argv)
 		
 	int PRG=1;
 	struct itimerval tmr1; //,tmr2;
-	tmr1.it_value.tv_sec=0;
-	tmr1.it_value.tv_usec=200000;
-	tmr1.it_interval.tv_sec=0;
-	tmr1.it_interval.tv_usec=200000;
-
-
 
 	signal(SIGALRM,GTI);// registring game timer
-
 	
 	init_scr(); // initialize ncurses;
-	
-
 	gameFild.border_x_min=col_max-9*col_max/10;
 	gameFild.border_x_max=col_max-2*col_max/10;
 	gameFild.border_y_min=row_max-9*row_max/10;
 	gameFild.border_y_max=row_max-2*row_max/10;
 
 	Game *GameController;
-	GameController=new Game(gameFild,6);
+	GameController=new Game(gameFild,6,0);
 
 
 	CreateGameFild();  //---------- Draw game fild ----------------------
 
-	setitimer(ITIMER_REAL,&tmr1,NULL); // start game ciclic timer
 
 	//--------------------- main cicle---------------		
 
@@ -122,16 +112,22 @@ int main (int argc, char** argv)
 				GameController->setGameStatus(game_over);
 				GameController->setGameStatus(game_exit);
 				gameMenuClose();
-				//ch='q';
 				PRG=0;
 				break;
 			case 'n':
-//				GameController->setGameStatus(game_stop);
+				tmr1.it_value.tv_sec=0;
+				tmr1.it_value.tv_usec=200000;
+				tmr1.it_interval.tv_sec=0;
+				tmr1.it_interval.tv_usec=200000;
+				setitimer(ITIMER_REAL,&tmr1,NULL); // start game ciclic timer
+
+				GameController->setGameStatus(game_stop);
 				GameController->setGameStatus(game_over);
 				gameMenuClose();
 				CreateGameFild();				
 				GameController->setGameStatus(game_new);
 				GameController->setGameStatus(game_on);
+				mvf=static_cast<MoveDirection>(0);
 				break;
 			case 'c':
 				if(GameController->getGameStatus()!=game_over)
@@ -159,6 +155,7 @@ int main (int argc, char** argv)
 							
 			GameController->setGameStatus(game_new);
 			GameController->setGameStatus(game_on);
+			mvf=static_cast<MoveDirection>(0);
 		}
 				
 		if (GameController->getGameStatus()==game_on)
@@ -194,7 +191,7 @@ int main (int argc, char** argv)
 				render(GameController,0);
 	
 				GameController->SnakeControl(mvf);
-				GameController->SnakeMoveToOneStep(0);
+				GameController->SnakeMoveToOneStep();
 
 				render(GameController,1);
 			}
@@ -327,6 +324,10 @@ void render(Game *GameCntrl,int FrameFlag)
 
 	if (GameCntrl->getGameStatus()==game_over){
 		mvaddstr(pole.border_y_max/2-5,pole.border_x_max/2-5,"G A M E   O V E R !!!!");
+	}
+	if (GameCntrl->getGameStatus()==game_new_level){
+		mvaddstr(pole.border_y_max/2-5,pole.border_x_max/2-5,"N E X T     L E V E L !!!!");
+//		sleep(20);
 	}
 
 	wrefresh(stdscr);
