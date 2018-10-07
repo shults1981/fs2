@@ -34,8 +34,8 @@ using namespace std;
 
 
 
-void init_scr();
-void CreateGameFild();
+void init_scr(int* RowMax, int* ColMax);
+void CreateGameFild(Fild GameFild, int RowMax, int ColMax);
 void destr_scr();
 void gameMenuOpen();
 void gameMenuClose();
@@ -76,7 +76,7 @@ int main (int argc, char** argv)
 
 	signal(SIGALRM,GTI);// registring game timer
 	
-	init_scr(); // initialize ncurses;
+	init_scr(&row_max,&col_max); // initialize ncurses;
 	gameFild.border_x_min=col_max-9*col_max/10;
 	gameFild.border_x_max=col_max-2*col_max/10;
 	gameFild.border_y_min=row_max-9*row_max/10;
@@ -86,7 +86,7 @@ int main (int argc, char** argv)
 	GameController=new Game(gameFild,6,0);
 
 
-	CreateGameFild();  //---------- Draw game fild ----------------------
+	CreateGameFild(gameFild,row_max,col_max);  //---------- Draw game fild ----------------------
 
 
 	//--------------------- main cicle---------------		
@@ -124,7 +124,7 @@ int main (int argc, char** argv)
 				GameController->setGameStatus(game_stop);
 				GameController->setGameStatus(game_over);
 				gameMenuClose();
-				CreateGameFild();				
+				CreateGameFild(gameFild,row_max,col_max);				
 				GameController->setGameStatus(game_new);
 				GameController->setGameStatus(game_on);
 				mvf=static_cast<MoveDirection>(0);
@@ -134,7 +134,7 @@ int main (int argc, char** argv)
 				{
 					GameController->setGameStatus(game_on);
 					gameMenuClose();
-					CreateGameFild();
+					CreateGameFild(gameFild,row_max,col_max);				
 				}
 				break;
 			
@@ -144,14 +144,14 @@ int main (int argc, char** argv)
 		if (GameController->getGameStatus()==game_new_level){
 			GameController->setGameStatus(game_stop);
 			GameController->setGameStatus(game_over);
-			CreateGameFild();
-
+			CreateGameFild(gameFild,row_max,col_max);				
+			
 			tmr1.it_value.tv_sec=0;
 			tmr1.it_value.tv_usec=200000-GameController->getGameLevel()*10000;
 			tmr1.it_interval.tv_sec=0;
 			tmr1.it_interval.tv_usec=200000-GameController->getGameLevel()*10000;
 
-			setitimer(ITIMER_REAL,&tmr1,NULL); // start game ciclic timer
+			setitimer(ITIMER_REAL,&tmr1,NULL); // reload and restart game ciclic timer
 							
 			GameController->setGameStatus(game_new);
 			GameController->setGameStatus(game_on);
@@ -210,7 +210,7 @@ int main (int argc, char** argv)
 
 
 
-void init_scr()
+void init_scr(int *RowMax, int *ColMax)
 {
 
 	//-------------init ncurses -----------------------------------
@@ -223,7 +223,7 @@ void init_scr()
 	init_pair (1,COLOR_WHITE,COLOR_BLUE);
 	init_pair (2,COLOR_WHITE,COLOR_BLUE);
 	attron(COLOR_PAIR(1));
-	getmaxyx(stdscr,row_max,col_max);
+	getmaxyx(stdscr,*RowMax,*ColMax);
 }
 
 void destr_scr()
@@ -231,25 +231,35 @@ void destr_scr()
 	endwin();
 }
 
-void CreateGameFild()
+void CreateGameFild(Fild GameFild, int RowMax,int ColMax)
 {
 int row, col;
 
-	for (row=0;row<=row_max;row++)
+	for (row=0;row<=RowMax;row++)
 	{
-		for (col=0;col<=col_max;col++)
+		for (col=0;col<=ColMax;col++)
 		{
 			move(row,col);
-			if ((row>=gameFild.border_y_min)&&(row<=gameFild.border_y_max)&&(col>=gameFild.border_x_min)&&(col<=gameFild.border_x_max))
+			if ((row>=GameFild.border_y_min)&&(row<=GameFild.border_y_max)&&(col>=GameFild.border_x_min)&&(col<=GameFild.border_x_max))
 			{
-				if (row==gameFild.border_y_min)
-					addch('X');
-				if ((row>=gameFild.border_y_min)&&(row<=gameFild.border_y_max)&&(col==gameFild.border_x_min))
-					addch('X');
-				if ((row>=gameFild.border_y_min)&&(row<=gameFild.border_y_max)&&(col==gameFild.border_x_max))
-					addch('X');
-				if (row==gameFild.border_y_max)
-					addch('X');
+				if ((row==GameFild.border_y_min) && (col==GameFild.border_x_min))
+					addch(ACS_ULCORNER);
+				if ((row==GameFild.border_y_min)&& (col>GameFild.border_x_min) && (col<GameFild.border_x_max))
+					addch(ACS_HLINE);
+				if ((row==GameFild.border_y_min) && (col==GameFild.border_x_max))
+					addch(ACS_URCORNER);
+
+				if ((row>GameFild.border_y_min)&&(row<GameFild.border_y_max)&&(col==GameFild.border_x_min))
+					addch(ACS_VLINE);
+				if ((row>GameFild.border_y_min)&&(row<GameFild.border_y_max)&&(col==GameFild.border_x_max))
+					addch(ACS_VLINE);
+
+				if ((row==GameFild.border_y_max) && (col==GameFild.border_x_min))
+					addch(ACS_LLCORNER);
+				if ((row==GameFild.border_y_max)&& (col>GameFild.border_x_min) && (col<GameFild.border_x_max))
+					addch(ACS_HLINE);
+				if ((row==GameFild.border_y_max) && (col==GameFild.border_x_max))
+					addch(ACS_LRCORNER);		
 			}
 			addch(' ');
 		}
@@ -266,11 +276,11 @@ void gameMenuOpen()
 	wmove(MainMenu,1,7);
 	waddstr(MainMenu,"MENU:");
 	wmove(MainMenu,3,1);
-	waddstr(MainMenu,"NEW GAME - 'n'");
+	waddstr(MainMenu,"NEW GAME...'n'");
 	wmove(MainMenu,5,1);
-	waddstr(MainMenu,"CONTINUE - 'C'");
+	waddstr(MainMenu,"CONTINUE...'c'");
 	wmove(MainMenu,7,1);
-	waddstr(MainMenu,"EXIT - 'e'");
+	waddstr(MainMenu,"EXIT.......'e'");
 	wrefresh(MainMenu);
 }
 
@@ -288,7 +298,7 @@ void render(Game *GameCntrl,int FrameFlag)
 
 	pole=GameCntrl->getGameFild();
 		
-	if (GameCntrl->getGameStatus()==game_on){
+	if ((GameCntrl->getGameStatus()==game_on)||(GameCntrl->getGameStatus()==game_new_level)){
 		GameCntrl->getRabbitPlace(pen);
 		mvaddch(pen._y,pen._x,'*');
 
@@ -311,33 +321,26 @@ void render(Game *GameCntrl,int FrameFlag)
 			sprintf(str_BUF2,"%d",GameCntrl->getGameLevel());
 			mvaddstr(pole.border_y_max+3,pole.border_x_min,"Level-");			
 			mvaddstr(pole.border_y_max+3,pole.border_x_min+7,str_BUF2);			
-		//-----------------------------debug output ------------------------------	
-		/*	sprintf(str_BUF1,"%d",GameCntrl->getSnakeLen());
-			mvaddstr(pole.border_y_max+3,pole.border_x_min+20,"Sn Len-");			
-			mvaddstr(pole.border_y_max+3,pole.border_x_min+27,str_BUF1);		
-			sprintf(str_BUF2,"%d",GameCntrl->DBG_f1());
-			mvaddstr(pole.border_y_max+4,pole.border_x_min+20,"Sn TPA Len-");			
-			mvaddstr(pole.border_y_max+4,pole.border_x_min+32,str_BUF2);			
-			*/
-
-	}
-
-	if (GameCntrl->getGameStatus()==game_over){
-		mvaddstr(pole.border_y_max/2-5,pole.border_x_max/2-5,"G A M E   O V E R !!!!");
 	}
 	if (GameCntrl->getGameStatus()==game_new_level){
 		mvaddstr(pole.border_y_max/2-5,pole.border_x_max/2-5,"N E X T     L E V E L !!!!");
-//		sleep(20);
+		wrefresh(stdscr);
+		napms(2000);
 	}
-
+	if (GameCntrl->getGameStatus()==game_over){
+		mvaddstr(pole.border_y_max/2-5,pole.border_x_max/2-5,"G A M E   O V E R !!!!");
+		wrefresh(stdscr);
+		napms(2000);
+	}
+	
 	wrefresh(stdscr);
 
 }
 
 void GTI (int signom)
 {
-	sprintf(str_BUF2,"%d",GameImpuls);
-	mvaddstr(gameFild.border_y_max+1,gameFild.border_x_min,str_BUF2);
+	//sprintf(str_BUF2,"%d",GameImpuls);
+	//mvaddstr(gameFild.border_y_max+1,gameFild.border_x_min,str_BUF2);
 	GameImpuls+=1;
 }
 
