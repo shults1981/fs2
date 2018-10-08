@@ -140,6 +140,19 @@ int Game::SnakeMoveToOneStep()
 	Point tempPoint1,tempPoint2,tempPoint3;
 
 	if (GST==game_on){
+
+		snake.getBodyCords(0,tempPoint1);
+		border_crash=!((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&(tempPoint1._y<GameFild.border_y_max));		
+
+		if (Kill_Self_Flag){
+			for (i=1;i<snake.getBodyLen();i++){
+				snake.getBodyCords(i,tempPoint2);
+				if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y))
+					kill_self=1;			
+			}
+		}
+
+	
 		snake.getBodyCords(0,tempPoint1);
 		if (tempPoint1._d!=(int)move_flag){
 			tempPoint1._d=(int)move_flag;
@@ -229,17 +242,10 @@ int Game::SnakeMoveToOneStep()
 		}
 
 //-------------------------------------------------
-		snake.getBodyCords(0,tempPoint1);
-		border_crash=!((tempPoint1._x>GameFild.border_x_min)&&(tempPoint1._x<GameFild.border_x_max)&&(tempPoint1._y>GameFild.border_y_min) &&(tempPoint1._y<GameFild.border_y_max));		
-
-		if (Kill_Self_Flag){
-			for (i=1;i<snake.getBodyLen();i++){
-				snake.getBodyCords(i,tempPoint2);
-				if ((tempPoint1._x==tempPoint2._x)&&(tempPoint1._y==tempPoint2._y))
-					kill_self=1;			
-			}
-		}
-			
+/*		
+ 
+	
+*/			
 		if (GameScore>=NumNextLevelJump){
 			GST=game_new_level;
 			GameLevel++;
